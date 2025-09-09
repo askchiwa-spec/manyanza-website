@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Calculator - Manyanza Company Limited</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Manyanza</h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="become-driver.html" class="nav-link">Become a Driver</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="pricing-calculator.html" class="nav-link active">Pricing Calculator</a>
+            </div>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Pricing Calculator Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Pricing Calculator</h1>
+            <p>Get an instant quote for your vehicle transit needs with our transparent pricing system.</p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-container">
+                <div class="calculator-form">
+                    <div class="form-header">
+                        <h2>Calculate Your Transit Cost</h2>
+                        <p>Enter your trip details below to get an accurate pricing estimate</p>
+                    </div>
+
+                    <form id="pricingCalculator" class="pricing-form">
+                        <!-- Route Selection -->
+                        <div class="form-group">
+                            <label for="routeType">Route Type</label>
+                            <select id="routeType" name="routeType" required>
+                                <option value="">Select route type</option>
+                                <option value="predefined">Predefined Corridor</option>
+                                <option value="custom">Custom Route</option>
+                            </select>
+                        </div>
+
+                        <!-- Predefined Routes -->
+                        <div class="form-group" id="predefinedRouteGroup" style="display: none;">
+                            <label for="predefinedRoute">Select Corridor</label>
+                            <select id="predefinedRoute" name="predefinedRoute">
+                                <option value="">Choose a corridor</option>
+                                <option value="dar-tunduma" data-km="932" data-nights="1" data-return="65000">Dar es Salaam → Tunduma (932 km)</option>
+                                <option value="dar-rusumo" data-km="1300" data-nights="2" data-return="90000">Dar es Salaam → Rusumo (1,300 km)</option>
+                                <option value="dar-mutukula" data-km="1480" data-nights="2" data-return="95000">Dar es Salaam → Mutukula (1,480 km)</option>
+                                <option value="dar-kabanga" data-km="1200" data-nights="2" data-return="85000">Dar es Salaam → Kabanga/Kobero (1,200 km)</option>
+                                <option value="dar-kasumulu" data-km="1100" data-nights="2" data-return="70000">Dar es Salaam → Kasumulu (1,100 km)</option>
+                            </select>
+                        </div>
+
+                        <!-- Custom Route Inputs -->
+                        <div id="customRouteGroup" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="pickup">Pickup Location</label>
+                                    <input type="text" id="pickup" name="pickup" placeholder="e.g., Dar es Salaam">
+                                </div>
+                                <div class="form-group">
+                                    <label for="destination">Destination</label>
+                                    <input type="text" id="destination" name="destination" placeholder="e.g., Arusha">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customKm">Distance (km)</label>
+                                    <input type="number" id="customKm" name="customKm" min="1" placeholder="Enter distance">
+                                </div>
+                                <div class="form-group">
+                                    <label for="customNights">Overnight Stays</label>
+                                    <input type="number" id="customNights" name="customNights" min="0" max="5" placeholder="Number of nights">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Options -->
+                        <div class="form-group">
+                            <label for="platformCommission">Platform Commission</label>
+                            <select id="platformCommission" name="platformCommission">
+                                <option value="0.18">Standard Rate (18%)</option>
+                                <option value="0.15">Volume/Partner Rate (15%)</option>
+                                <option value="0.20">Premium Rate (20%)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="waitingHours">Waiting Time (hours)</label>
+                                <input type="number" id="waitingHours" name="waitingHours" min="0" max="24" placeholder="0" value="0">
+                                <small class="form-note">First 2 hours are free</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="afterHours">After-Hours Service</label>
+                                <select id="afterHours" name="afterHours">
+                                    <option value="0">No</option>
+                                    <option value="25000">Yes (+TSh 25,000)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="calculateBtn" class="btn btn-primary btn-large">
+                                <i class="fas fa-calculator"></i> Calculate Price
+                            </button>
+                            <button type="button" id="resetBtn" class="btn btn-outline">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Results Display -->
+                <div class="calculator-results" id="calculatorResults" style="display: none;">
+                    <div class="results-header">
+                        <h3><i class="fas fa-receipt"></i> Price Breakdown</h3>
+                    </div>
+                    
+                    <div class="breakdown-section">
+                        <h4>Service Components</h4>
+                        <div class="breakdown-item">
+                            <span>Base Distance Fee:</span>
+                            <span id="baseKmFee">TSh 0</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Per Diem (Overnight):</span>
+                            <span id="perDiemFee">TSh 0</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Return Travel Allowance:</span>
+                            <span id="returnTravelFee">TSh 0</span>
+                        </div>
+                        <div class="breakdown-item" id="waitingFeeRow" style="display: none;">
+                            <span>Waiting Fee:</span>
+                            <span id="waitingFee">TSh 0</span>
+                        </div>
+                        <div class="breakdown-item" id="afterHoursFeeRow" style="display: none;">
+                            <span>After-Hours Surcharge:</span>
+                            <span id="afterHoursFee">TSh 0</span>
+                        </div>
+                        <div class="breakdown-divider"></div>
+                        <div class="breakdown-item subtotal">
+                            <span>Subtotal (Driver Service):</span>
+                            <span id="subtotal">TSh 0</span>
+                        </div>
+                        <div class="breakdown-item commission">
+                            <span>Platform Commission:</span>
+                            <span id="commissionAmount">TSh 0</span>
+                        </div>
+                    </div>
+
+                    <div class="total-section">
+                        <div class="total-amount">
+                            <span>Total Customer Price:</span>
+                            <span id="customerTotal">TSh 0</span>
+                        </div>
+                        <div class="driver-payout">
+                            <span>Driver Payout:</span>
+                            <span id="driverPayout">TSh 0</span>
+                        </div>
+                    </div>
+
+                    <div class="exclusions-note">
+                        <h4><i class="fas fa-info-circle"></i> Important Notes</h4>
+                        <ul>
+                            <li>Fuel, tolls, port fees, storage, and statutory fees are excluded</li>
+                            <li>These fees are paid by owner/agent or facilitated at pass-through</li>
+                            <li>All prices include driver service, required per diems, and return travel</li>
+                            <li>Final pricing may vary based on specific route conditions</li>
+                        </ul>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="contact.html" class="btn btn-primary">
+                            <i class="fas fa-phone"></i> Book This Trip
+                        </a>
+                        <button type="button" id="whatsappQuote" class="btn btn-outline">
+                            <i class="fab fa-whatsapp"></i> WhatsApp Quote
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Models Info -->
+    <section class="pricing-models">
+        <div class="container">
+            <h2 class="section-title">Our Pricing Models</h2>
+            <div class="models-grid">
+                <div class="model-card">
+                    <div class="model-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>Model A: Per-Kilometer</h3>
+                    <p>Transparent, flexible pricing based on actual distance traveled. Perfect for custom routes and one-time trips.</p>
+                    <ul class="model-features">
+                        <li>TSh 1,500 per kilometer</li>
+                        <li>TSh 50,000 per overnight stay</li>
+                        <li>Corridor-based return allowances</li>
+                        <li>15-20% platform commission</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <div class="model-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Model B: Full-Package</h3>
+                    <p>Fixed corridor rates with everything included. Ideal for regular routes and predictable budgeting.</p>
+                    <ul class="model-features">
+                        <li>Fixed corridor pricing</li>
+                        <li>All allowances included</li>
+                        <li>No hidden costs</li>
+                        <li>Volume discounts available</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Manyanza</h3>
+                    <p>Tanzania's trusted vehicle transit and driver marketplace.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="become-driver.html">Become a Driver</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Per-Kilometer Transit</a></li>
+                        <li><a href="services.html">Full-Package Delivery</a></li>
+                        <li><a href="services.html">WhatsApp Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fab fa-whatsapp"></i> WhatsApp Support</p>
+                    <p><i class="fas fa-envelope"></i> info@manyanza.co.tz</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Dar es Salaam, Tanzania</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Manyanza Company Limited. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/pricing-calculator.js"></script>
+</body>
+</html>

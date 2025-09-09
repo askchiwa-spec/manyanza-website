@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Manyanza Company Limited</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Manyanza</h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="pricing-calculator.html" class="nav-link">Pricing</a>
+                <a href="become-driver.html" class="nav-link">Become a Driver</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
+            </div>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Get in Touch</h1>
+            <p>Ready to transport your vehicle? Have questions? We're here to help you every step of the way.</p>
+        </div>
+    </section>
+
+    <!-- Contact Options -->
+    <section class="contact-options">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-card featured">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp Direct Booking</h3>
+                    <p>Get instant quotes and book your vehicle transit directly through WhatsApp. Our team responds within minutes.</p>
+                    <div class="contact-info">
+                        <span class="contact-detail">+255 XXX XXX XXX</span>
+                    </div>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fab fa-whatsapp"></i> Start WhatsApp Chat
+                    </a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Relationship Manager</h3>
+                    <p>For businesses and regular clients, speak directly with your dedicated relationship manager for personalized service.</p>
+                    <div class="contact-info">
+                        <span class="contact-detail">business@manyanza.co.tz</span>
+                    </div>
+                    <a href="mailto:business@manyanza.co.tz" class="btn btn-secondary">Contact Manager</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact-form-section">
+        <div class="container">
+            <div class="contact-form-container">
+                <div class="form-content">
+                    <div class="form-header">
+                        <h2>Send Us a Message</h2>
+                        <p>Fill out the form below and we'll get back to you within 24 hours.</p>
+                    </div>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactName">Full Name *</label>
+                                <input type="text" id="contactName" name="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">Email Address *</label>
+                                <input type="email" id="contactEmail" name="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactPhone">Phone Number *</label>
+                                <input type="tel" id="contactPhone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="serviceType">Service Interest</label>
+                                <select id="serviceType" name="serviceType">
+                                    <option value="">Select service type</option>
+                                    <option value="per-km">Per-Kilometer Transit</option>
+                                    <option value="full-package">Full-Package Delivery</option>
+                                    <option value="quote">General Quote</option>
+                                    <option value="driver">Become a Driver</option>
+                                    <option value="other">Other Inquiry</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactMessage">Message *</label>
+                            <textarea id="contactMessage" name="message" rows="6" required placeholder="Please provide details about your vehicle transit needs, pickup location, destination, vehicle type, and preferred dates..."></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="contact-info-sidebar">
+                    <div class="info-card">
+                        <h3>Quick Booking</h3>
+                        <p>For fastest service, WhatsApp us directly with:</p>
+                        <ul class="quick-list">
+                            <li>Pickup location</li>
+                            <li>Destination</li>
+                            <li>Vehicle type</li>
+                            <li>Preferred dates</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline">
+                            <i class="fab fa-whatsapp"></i> Quick Book
+                        </a>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Office Hours</h3>
+                        <div class="office-hours">
+                            <div class="hours-item">
+                                <span>Monday - Friday</span>
+                                <span>8:00 AM - 6:00 PM</span>
+                            </div>
+                            <div class="hours-item">
+                                <span>Saturday</span>
+                                <span>9:00 AM - 4:00 PM</span>
+                            </div>
+                            <div class="hours-item">
+                                <span>Sunday</span>
+                                <span>Emergency Only</span>
+                            </div>
+                        </div>
+                        <p class="hours-note">WhatsApp support available 24/7</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="contact-information">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp Support</h3>
+                    <p>+255 XXX XXX XXX</p>
+                    <span class="availability">Available 24/7</span>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Support</h3>
+                    <p>info@manyanza.co.tz</p>
+                    <span class="availability">Response within 24 hours</span>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Office Location</h3>
+                    <p>Dar es Salaam, Tanzania</p>
+                    <span class="availability">By appointment only</span>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Business Inquiries</h3>
+                    <p>business@manyanza.co.tz</p>
+                    <span class="availability">Corporate partnerships</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Areas Map -->
+    <section class="service-areas-section">
+        <div class="container">
+            <div class="areas-content">
+                <div class="areas-text">
+                    <h2>Our Service Coverage</h2>
+                    <p>
+                        Manyanza provides comprehensive vehicle transit services across Tanzania's major corridors 
+                        and routes, connecting all key business and residential areas.
+                    </p>
+                    <div class="coverage-list">
+                        <div class="coverage-item">
+                            <i class="fas fa-route"></i>
+                            <span>All major city corridors</span>
+                        </div>
+                        <div class="coverage-item">
+                            <i class="fas fa-route"></i>
+                            <span>Inter-regional connections</span>
+                        </div>
+                        <div class="coverage-item">
+                            <i class="fas fa-route"></i>
+                            <span>Custom route planning</span>
+                        </div>
+                        <div class="coverage-item">
+                            <i class="fas fa-route"></i>
+                            <span>Border crossing assistance</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="areas-visual">
+                    <div class="map-placeholder">
+                        <i class="fas fa-map fa-4x"></i>
+                        <p>Tanzania Service Coverage</p>
+                        <div class="major-routes">
+                            <span>Dar es Salaam ↔ Arusha</span>
+                            <span>Dar es Salaam ↔ Mwanza</span>
+                            <span>Dar es Salaam ↔ Mbeya</span>
+                            <span>Dar es Salaam ↔ Dodoma</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>How quickly can I get a quote?</h3>
+                    <p>WhatsApp quotes are provided within minutes. Email quotes are sent within 2-4 hours during business hours.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What payment methods do you accept?</h3>
+                    <p>We accept M-Pesa, TigoPesa, bank transfers, and international payment options for overseas clients.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How far in advance should I book?</h3>
+                    <p>We recommend booking 24-48 hours in advance, though same-day service may be available based on driver availability.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do you provide insurance coverage?</h3>
+                    <p>Yes, all vehicles are covered by comprehensive insurance during transit. Coverage details are provided with your booking confirmation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Contact -->
+    <section class="emergency-contact">
+        <div class="container">
+            <div class="emergency-content">
+                <div class="emergency-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="emergency-text">
+                    <h2>Need Emergency Assistance?</h2>
+                    <p>If you have an urgent vehicle transit need or require immediate assistance with an ongoing trip, contact our emergency line.</p>
+                </div>
+                <div class="emergency-action">
+                    <a href="#" class="btn btn-primary emergency-btn">
+                        <i class="fas fa-phone"></i> Emergency Line
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Manyanza</h3>
+                    <p>Tanzania's trusted vehicle transit and driver marketplace.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="become-driver.html">Become a Driver</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Per-Kilometer Transit</a></li>
+                        <li><a href="services.html">Full-Package Delivery</a></li>
+                        <li><a href="services.html">WhatsApp Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fab fa-whatsapp"></i> WhatsApp Support</p>
+                    <p><i class="fas fa-envelope"></i> info@manyanza.co.tz</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Dar es Salaam, Tanzania</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Manyanza Company Limited. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
