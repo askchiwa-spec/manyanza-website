@@ -1,0 +1,17 @@
+{
+  "RATE_PER_KM": 700,
+  "PER_DIEM_RATE": 50000,
+  "PLATFORM_COMMISSION_DEFAULT": 0.18,
+  "WAITING_FEE_PER_HOUR": 15000,
+  "AFTER_HOURS_SURCHARGE": 25000,
+  "CORRIDOR_ALLOWANCES": {
+    "Tunduma": 65000,
+    "Rusumo": 90000,
+    "Mutukula": 95000,
+    "Kabanga": 85000,
+    "Kobero": 85000,
+    "Kasumulu": 70000
+  },
+  "LAST_UPDATED": "2025-01-10T10:00:00Z",
+  "UPDATED_BY": "admin"
+}

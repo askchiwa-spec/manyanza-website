@@ -1,0 +1,17 @@
+{
+  "name": "manyanza-simple-webhook",
+  "version": "1.0.0",
+  "description": "Simple Manyanza WhatsApp webhook server",
+  "main": "simple-webhook.js",
+  "scripts": {
+    "start": "node simple-webhook.js",
+    "dev": "nodemon simple-webhook.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "twilio": "^4.19.0"
+  },
+  "keywords": ["twilio", "whatsapp", "webhook", "manyanza"],
+  "author": "Manyanza Company Limited",
+  "license": "PROPRIETARY"
+}

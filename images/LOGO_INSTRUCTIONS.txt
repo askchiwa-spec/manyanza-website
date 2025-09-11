@@ -1,0 +1,31 @@
+MANyanza Logo Implementation Instructions
+=====================================
+
+Current Status:
+- A temporary SVG logo has been created and implemented across the website
+- All HTML files have been updated to reference the new logo
+- CSS has been updated to properly display the SVG logo
+
+To Replace with Official Logo:
+1. Obtain the official Manyanza Company Limited logo in PNG format
+2. Save it as "manyanza-logo.png" in this directory
+3. Replace the current placeholder file
+4. The website will automatically use the PNG logo instead of the SVG version
+
+Logo Requirements:
+- Dimensions: 200-400px width for optimal display
+- Format: PNG with transparent background preferred
+- Colors: Teal and purple gradient as per brand guidelines
+- Content: Geometric design with "MANYANZA" and "COMPANY LIMITED" text
+
+Files Updated to Use Logo:
+- All HTML pages (index, about, services, etc.)
+- Dashboard pages (client, driver, admin)
+- Registration and login pages
+- CSS styling for proper logo display
+
+Technical Notes:
+- The website supports both PNG and SVG formats
+- Graceful fallback to text when images fail to load
+- Responsive design considerations implemented
+- Accessibility attributes included for screen readers

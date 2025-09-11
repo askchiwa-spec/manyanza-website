@@ -1,0 +1,22 @@
+{
+  "name": "manyanza-whatsapp-webhook",
+  "version": "1.0.0",
+  "description": "Manyanza WhatsApp webhook server for Twilio integration",
+  "main": "webhook-server.js",
+  "scripts": {
+    "start": "node webhook-server.js",
+    "dev": "nodemon webhook-server.js",
+    "test": "node webhook-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "twilio": "^4.19.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["twilio", "whatsapp", "webhook", "manyanza"],
+  "author": "Manyanza Company Limited",
+  "license": "PROPRIETARY"
+}

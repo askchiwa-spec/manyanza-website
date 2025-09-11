@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Manyanza Vehicle Transit</title>
+    <link rel="icon" type="image/x-icon" href="images/manyanza-logo.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .logo p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .role-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 30px;
+        }
+
+        .role-tab {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #7f8c8d;
+        }
+
+        .role-tab.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .login-form {
+            display: none;
+        }
+
+        .login-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .register-link {
+            display: block;
+            color: #667eea;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: #764ba2;
+            transform: translateX(-5px);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .role-description {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .role-description h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .role-description p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+
+            .logo h1 {
+                font-size: 2rem;
+            }
+
+            .role-tab {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="images/manyanza-logo.svg" alt="Manyanza Logo" style="width: 100px; height: auto; margin-bottom: 20px;">
+            <h1>🚗 Manyanza</h1>
+            <p>Vehicle Transit Platform</p>
+        </div>
+
+        <!-- Role Selection Tabs -->
+        <div class="role-tabs">
+            <button class="role-tab active" data-role="client">
+                <i class="fas fa-user"></i> Client
+            </button>
+            <button class="role-tab" data-role="driver">
+                <i class="fas fa-car"></i> Driver
+            </button>
+            <button class="role-tab" data-role="admin">
+                <i class="fas fa-crown"></i> Admin
+            </button>
+        </div>
+
+        <!-- Error/Info Messages -->
+        <div id="alertContainer"></div>
+
+        <!-- Client Login Form -->
+        <div class="login-form active" id="clientForm">
+            <div class="role-description">
+                <h4>Client Login</h4>
+                <p>Access your booking history and track your vehicle transit requests.</p>
+            </div>
+            
+            <form id="clientLoginForm">
+                <div class="form-group">
+                    <label for="clientIdentifier">Phone Number or Email</label>
+                    <input type="text" id="clientIdentifier" name="identifier" required 
+                           placeholder="Enter your phone number or email">
+                </div>
+                <div class="form-group">
+                    <label for="clientPassword">Password (Optional for WhatsApp users)</label>
+                    <input type="password" id="clientPassword" name="password" 
+                           placeholder="Leave blank if you use WhatsApp only">
+                </div>
+                <button type="submit" class="login-btn">
+                    Sign In as Client
+                </button>
+            </form>
+            <a href="client-register.html" class="register-link">
+                Don't have an account? Register as Client
+            </a>
+        </div>
+
+        <!-- Driver Login Form -->
+        <div class="login-form" id="driverForm">
+            <div class="role-description">
+                <h4>Driver Login</h4>
+                <p>Access your driver dashboard, view assigned bookings, and manage your availability.</p>
+            </div>
+            
+            <form id="driverLoginForm">
+                <div class="form-group">
+                    <label for="driverIdentifier">Email or Phone Number</label>
+                    <input type="text" id="driverIdentifier" name="identifier" required 
+                           placeholder="Enter your email or phone number">
+                </div>
+                <div class="form-group">
+                    <label for="driverPassword">Password</label>
+                    <input type="password" id="driverPassword" name="password" required 
+                           placeholder="Enter your password">
+                </div>
+                <button type="submit" class="login-btn">
+                    Sign In as Driver
+                </button>
+            </form>
+            <a href="driver-register.html" class="register-link">
+                Want to become a driver? Register here
+            </a>
+        </div>
+
+        <!-- Admin Login Form -->
+        <div class="login-form" id="adminForm">
+            <div class="role-description">
+                <h4>Super Admin Login</h4>
+                <p>Full system access including price management, user administration, and system configuration.</p>
+            </div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Admin Email</label>
+                    <input type="email" id="adminEmail" name="email" required 
+                           placeholder="admin@manyanza.co.tz">
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Admin Password</label>
+                    <input type="password" id="adminPassword" name="password" required 
+                           placeholder="Enter admin password">
+                </div>
+                <button type="submit" class="login-btn">
+                    Sign In as Admin
+                </button>
+            </form>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px; color: #7f8c8d;">Signing you in...</p>
+        </div>
+
+        <!-- Back to Home -->
+        <a href="/" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.role-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and forms
+                document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding form
+                const role = tab.dataset.role;
+                document.getElementById(role + 'Form').classList.add('active');
+            });
+        });
+
+        // Check URL parameters for error messages and role
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const role = urlParams.get('role');
+        const redirect = urlParams.get('redirect');
+
+        // Switch to specific role tab if specified
+        if (role && ['client', 'driver', 'admin'].includes(role)) {
+            document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
+            
+            document.querySelector(`[data-role="${role}"]`).classList.add('active');
+            document.getElementById(role + 'Form').classList.add('active');
+        }
+
+        // Display error messages
+        if (error) {
+            showAlert(getErrorMessage(error), 'error');
+        }
+
+        // Form submission handlers - Modified for static website version
+        document.getElementById('clientLoginForm').addEventListener('submit', handleStaticLogin);
+        document.getElementById('driverLoginForm').addEventListener('submit', handleStaticLogin);
+        document.getElementById('adminLoginForm').addEventListener('submit', handleStaticLogin);
+
+        // Simplified login handler for static website demo
+        function handleStaticLogin(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const role = form.closest('.login-form').id.replace('Form', '');
+            
+            // Show loading
+            showLoading();
+            
+            // Simulate login process for demo purposes
+            setTimeout(() => {
+                // For static demo, we'll just redirect to dashboard
+                showAlert('Login successful! Redirecting...', 'success');
+                
+                // Redirect based on role
+                setTimeout(() => {
+                    let redirectPath = redirect || getDashboardPath(role);
+                    // For static version, redirect to HTML files
+                    if (redirectPath.startsWith('/')) {
+                        redirectPath = redirectPath.substring(1) + '.html';
+                    }
+                    window.location.href = redirectPath;
+                }, 1500);
+            }, 1000);
+        }
+
+        function getDashboardPath(role) {
+            switch (role) {
+                case 'client': return 'client-dashboard.html';
+                case 'driver': return 'driver-dashboard.html';
+                case 'admin': return 'admin-dashboard.html';
+                default: return 'dashboard.html';
+            }
+        }
+
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertClass = type === 'error' ? 'alert-error' : 
+                              type === 'success' ? 'alert-success' : 'alert-info';
+            
+            alertContainer.innerHTML = `
+                <div class="alert ${alertClass}">
+                    ${message}
+                </div>
+            `;
+            
+            // Auto-hide success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    alertContainer.innerHTML = '';
+                }, 3000);
+            }
+        }
+
+        function showLoading() {
+            document.getElementById('loading').classList.add('show');
+            document.querySelectorAll('.login-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.textContent = 'Signing in...';
+            });
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('show');
+            document.querySelectorAll('.login-btn').forEach(btn => {
+                btn.disabled = false;
+                // Reset button text based on form
+                const form = btn.closest('.login-form');
+                if (form.id === 'clientForm') btn.textContent = 'Sign In as Client';
+                else if (form.id === 'driverForm') btn.textContent = 'Sign In as Driver';
+                else if (form.id === 'adminForm') btn.textContent = 'Sign In as Admin';
+            });
+        }
+
+        function getErrorMessage(error) {
+            switch (error) {
+                case 'invalid_credentials':
+                    return 'Invalid email/phone or password. Please try again.';
+                case 'account_not_approved':
+                    return 'Your driver account is pending approval. Please contact support.';
+                case 'account_suspended':
+                    return 'Your account has been suspended. Please contact support.';
+                case 'token_expired':
+                    return 'Your session has expired. Please sign in again.';
+                case 'access_denied':
+                    return 'Access denied. Please check your credentials.';
+                default:
+                    return 'An error occurred during authentication. Please try again.';
+            }
+        }
+
+        // Simplified authentication check for static website
+        // In a real implementation, this would check with the backend
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            // For static demo, we'll just check if token exists
+            // In a real app, this would validate with backend
+            console.log('User appears to be logged in (demo mode)');
+            // Uncomment the lines below if you want to auto-redirect when token exists
+            /*
+            const redirectPath = redirect || '/dashboard.html';
+            window.location.href = redirectPath;
+            */
+        }
+    </script>
+</body>
+</html>

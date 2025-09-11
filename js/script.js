@@ -1,3 +1,116 @@
+// Manyanza Website JavaScript
+
+// Authentication state management
+let currentUser = null;
+
+// Initialize authentication on page load
+// For static website, skip authentication check
+document.addEventListener('DOMContentLoaded', function() {
+    // initializeAuth(); // Disabled for static website
+    updateNavGuest(); // Default to guest view
+});
+
+// Authentication functions
+async function initializeAuth() {
+    try {
+        const response = await fetch('/auth/status');
+        if (response.ok) {
+            const data = await response.json();
+            if (data.isAuthenticated) {
+                currentUser = data.user;
+                updateNavAuthenticated(data.user);
+            } else {
+                updateNavGuest();
+            }
+        } else {
+            updateNavGuest();
+        }
+    } catch (error) {
+        console.log('Auth check failed, assuming guest');
+        updateNavGuest();
+    }
+}
+
+function updateNavAuthenticated(user) {
+    const navAuth = document.getElementById('nav-auth');
+    if (navAuth) {
+        navAuth.innerHTML = `
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <img src="${user.profilePicture || '/images/default-avatar.png'}" alt="${user.name}" class="avatar-img">
+                </div>
+                <div class="user-dropdown">
+                    <button class="user-btn" onclick="toggleUserMenu()">
+                        <span>${user.name}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="userDropdown">
+                        <a href="dashboard.html" class="dropdown-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Dashboard
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button onclick="logout()" class="dropdown-item logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function updateNavGuest() {
+    const navAuth = document.getElementById('nav-auth');
+    if (navAuth) {
+        navAuth.innerHTML = `
+            <a href="login.html" class="nav-link login-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign In
+            </a>
+        `;
+    }
+}
+
+function toggleUserMenu() {
+    const dropdown = document.getElementById('userDropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+    }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const userMenu = document.querySelector('.user-menu');
+    const dropdown = document.getElementById('userDropdown');
+    
+    if (dropdown && userMenu && !userMenu.contains(event.target)) {
+        dropdown.classList.remove('show');
+    }
+});
+
+async function logout() {
+    try {
+        const response = await fetch('/auth/logout');
+        if (response.ok) {
+            currentUser = null;
+            updateNavGuest();
+            showNotification('Logged out successfully', 'success');
+            
+            // Redirect to home page after a short delay
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        } else {
+            throw new Error('Logout failed');
+        }
+    } catch (error) {
+        console.error('Logout error:', error);
+        showNotification('Error during logout', 'error');
+    }
+}
+
 // Mobile Navigation Toggle
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenu = document.getElementById('mobile-menu');
@@ -286,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // WhatsApp Integration (Placeholder)
 function openWhatsApp(message = '') {
-    const phoneNumber = '+255XXXXXXXXX'; // Replace with actual WhatsApp number
+    const phoneNumber = '+255765111131'; // Manyanza Company Limited WhatsApp
     const defaultMessage = message || 'Hello, I would like to inquire about your vehicle transit services.';
     const encodedMessage = encodeURIComponent(defaultMessage);
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;

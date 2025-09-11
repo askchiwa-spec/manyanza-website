@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Manyanza Vehicle Transit</title>
+    <link rel="icon" type="image/x-icon" href="/images/manyanza-logo.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #667eea;
+            object-fit: cover;
+        }
+
+        .user-info h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .welcome-banner.hidden {
+            display: none;
+        }
+
+        .welcome-banner h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .welcome-banner p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-icon.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-icon.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .card-icon.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .card-icon.info {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .quick-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #495057;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .profile-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .profile-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .profile-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .profile-details {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-banner h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <img src="/images/manyanza-logo.svg" alt="Manyanza Logo" class="user-avatar" style="width: 60px; height: 60px;">
+                <div class="user-info">
+                    <h1 id="userName">Loading...</h1>
+                    <p id="userEmail">Loading...</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="/pricing-calculator.html" class="btn btn-primary">
+                    <i class="fas fa-calculator"></i>
+                    Pricing Calculator
+                </a>
+                <a href="/admin.html" class="btn btn-secondary">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+                <button onclick="logout()" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Welcome Banner (for first-time users) -->
+        <div id="welcomeBanner" class="welcome-banner hidden">
+            <h2>🎉 Welcome to Manyanza!</h2>
+            <p>Thank you for joining our platform. Explore our services and start booking vehicle transport across Tanzania.</p>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Quick Actions -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon primary">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="card-title">Quick Actions</h3>
+                </div>
+                <div class="card-content">
+                    <div class="quick-actions">
+                        <a href="/pricing-calculator.html" class="quick-action">
+                            <span><i class="fas fa-calculator"></i> Calculate Price</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="https://wa.me/255765111131" target="_blank" class="quick-action">
+                            <span><i class="fab fa-whatsapp"></i> Book via WhatsApp</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="/services.html" class="quick-action">
+                            <span><i class="fas fa-truck"></i> View Services</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="/contact.html" class="quick-action">
+                            <span><i class="fas fa-phone"></i> Contact Support</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Information -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon info">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="card-title">Profile Information</h3>
+                </div>
+                <div class="card-content">
+                    <div class="profile-details">
+                        <div class="profile-item">
+                            <div class="profile-label">Full Name</div>
+                            <div class="profile-value" id="profileName">Loading...</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Email Address</div>
+                            <div class="profile-value" id="profileEmail">Loading...</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Last Login</div>
+                            <div class="profile-value" id="profileLastLogin">Loading...</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Total Logins</div>
+                            <div class="profile-value" id="profileLoginCount">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Overview -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon success">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="card-title">Our Services</h3>
+                </div>
+                <div class="card-content">
+                    <p>Manyanza provides professional vehicle transit services across Tanzania with:</p>
+                    <ul style="margin: 15px 0; padding-left: 20px; color: #7f8c8d;">
+                        <li>Vetted professional drivers</li>
+                        <li>Comprehensive insurance coverage</li>
+                        <li>Transparent pricing (TSh 700/km)</li>
+                        <li>24/7 WhatsApp support</li>
+                        <li>Real-time tracking</li>
+                    </ul>
+                    <a href="/services.html" class="btn btn-primary" style="margin-top: 15px;">
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Support & Help -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon warning">
+                        <i class="fas fa-life-ring"></i>
+                    </div>
+                    <h3 class="card-title">Support & Help</h3>
+                </div>
+                <div class="card-content">
+                    <p>Need assistance? Our support team is available 24/7 to help you with:</p>
+                    <ul style="margin: 15px 0; padding-left: 20px; color: #7f8c8d;">
+                        <li>Booking assistance</li>
+                        <li>Pricing inquiries</li>
+                        <li>Driver coordination</li>
+                        <li>Payment support</li>
+                    </ul>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <a href="https://wa.me/255765111131" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp
+                        </a>
+                        <a href="/contact.html" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i>
+                            Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script>
+        // Check URL parameters for welcome message
+        const urlParams = new URLSearchParams(window.location.search);
+        const showWelcome = urlParams.get('welcome') === 'true';
+
+        // Load user profile on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserProfile();
+            
+            if (showWelcome) {
+                showWelcomeBanner();
+            }
+        });
+
+        async function loadUserProfile() {
+            try {
+                const response = await fetch('/auth/profile');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load profile');
+                }
+
+                const data = await response.json();
+                const user = data.user;
+
+                // Update header
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userEmail').textContent = user.email;
+                
+                if (user.profilePicture) {
+                    document.getElementById('userAvatar').src = user.profilePicture;
+                }
+
+                // Update profile details
+                document.getElementById('profileName').textContent = user.name;
+                document.getElementById('profileEmail').textContent = user.email;
+                document.getElementById('profileLastLogin').textContent = 
+                    user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString() : 'First login';
+                document.getElementById('profileLoginCount').textContent = user.loginCount || '1';
+
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                showToast('Error loading profile information', 'error');
+                // Redirect to login if authentication failed
+                if (error.message.includes('Authentication') || error.message.includes('401')) {
+                    window.location.href = '/login';
+                }
+            }
+        }
+
+        function showWelcomeBanner() {
+            const banner = document.getElementById('welcomeBanner');
+            banner.classList.remove('hidden');
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                banner.classList.add('hidden');
+            }, 10000);
+        }
+
+        async function logout() {
+            try {
+                const response = await fetch('/auth/logout');
+                
+                if (response.ok) {
+                    showToast('Logged out successfully');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
+                } else {
+                    throw new Error('Logout failed');
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+                showToast('Error during logout', 'error');
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

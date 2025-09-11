@@ -1,10 +1,21 @@
-# Manyanza Company Limited - Website
+# Manyanza Company Limited - Complete Platform
 
 ![Manyanza Logo](https://img.shields.io/badge/Manyanza-Vehicle%20Transit-blue?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Phase%201%20MVP-green?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Phase%202%20Automation-green?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Platform-Tanzania-red?style=for-the-badge)
 
-A professional website for **Manyanza Company Limited**, Tanzania's trusted vehicle transit and driver marketplace. This Phase 1 Manual MVP is designed to validate demand, pricing, and workflow for vehicle transit services across Tanzania.
+A comprehensive platform for **Manyanza Company Limited**, Tanzania's trusted vehicle transit and driver marketplace. Now featuring full WhatsApp automation with Twilio integration for seamless booking management.
+
+## 🏗 Platform Architecture
+
+```
+Phase 1 Website ←→ Phase 2 Backend API ←→ Twilio WhatsApp ←→ Clients
+     (Frontend)            (Automation)           (Business API)
+        ↓                        ↓                        ↓
+   Static Pages           SQLite Database          WhatsApp Business
+   Pricing Calculator     Admin Dashboard          SMS Notifications
+   Contact Forms         Booking Management        Payment Verification
+```
 
 ## 🚗 About Manyanza
 
@@ -80,50 +91,89 @@ Customer_Total = Subtotal × (1 + Platform_Commission%)
 - **Server:** Python 3 built-in HTTP server
 - **Version Control:** Git
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
-### Prerequisites
-- Python 3.x
-- Modern web browser
-- Git (for development)
+### Frontend (Phase 1 Website)
 
-### Local Development
+**Local Development:**
+```bash
+# Start static website
+python3 -m http.server 8080
+# Access: http://localhost:8080
+```
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/yourusername/manyanza-website.git
-   cd manyanza-website
-   ```
+**Production Deployment:**
+- **GitHub Pages:** https://askchiwa-spec.github.io/manyanza-website
+- **Custom Domain:** Configure DNS and SSL
 
-2. **Start local server:**
-   ```bash
-   python3 -m http.server 8080
-   ```
+### Backend (Phase 2 Automation)
 
-3. **Open in browser:**
-   ```
-   http://localhost:8080
-   ```
+**Setup & Installation:**
+```bash
+cd backend
+./setup.sh  # Automated setup script
+```
 
-### Deployment
+**Development:**
+```bash
+npm run dev  # Start development server
+```
 
-**Static Hosting (Recommended):**
-- GitHub Pages
-- Netlify
-- Vercel
-- Any static web hosting service
+**Production:**
+```bash
+npm start   # Start production server
+```
 
-**Traditional Hosting:**
-- Upload all files maintaining directory structure
-- No server-side processing required
+**API Documentation:**
+- **Health Check:** http://localhost:3000/health
+- **Admin Dashboard:** http://localhost:3000/api/admin/dashboard
+- **Complete API Docs:** `/backend/README.md`
 
-## 📱 Mobile-First Design
+## 📱 WhatsApp Automation Features
 
-The website is built with a mobile-first approach, ensuring optimal experience across all devices:
-- Responsive navigation menu
-- Touch-friendly buttons and forms
-- Optimized for WhatsApp sharing
-- Fast loading on mobile networks
+### 🤖 Intelligent Bot Conversations
+- **Natural language booking** collection
+- **Real-time pricing** calculations
+- **Payment proof** handling with image uploads
+- **Status updates** throughout journey
+- **Emergency alerts** and support
+
+### 📊 Admin Workflow
+- **Booking management** dashboard
+- **Driver assignment** with SMS/WhatsApp notifications
+- **Payment verification** system
+- **Document management** for driver onboarding
+- **Real-time analytics** and reporting
+
+### 📞 Communication Channels
+- **Primary:** WhatsApp Business API (+255765111131)
+- **Backup:** SMS notifications
+- **Admin:** Email alerts and dashboard notifications
+- **Emergency:** Multi-channel escalation
+
+## 🔄 Complete User Journey
+
+### Client Booking Flow
+```
+1. WhatsApp: "book" → Bot starts conversation
+2. Collect: Pickup → Destination → Vehicle → Date
+3. Calculate: Real-time pricing with breakdown
+4. Payment: Upload M-Pesa/TigoPesa proof
+5. Confirm: Booking created, driver assignment pending
+6. Assign: Admin assigns vetted driver
+7. Updates: Real-time status via WhatsApp
+8. Complete: Delivery confirmation and rating
+```
+
+### Admin Workflow
+```
+1. Alert: New booking notification
+2. Verify: Payment proof validation
+3. Assign: Select available driver
+4. Monitor: Track booking progress
+5. Support: Handle any issues
+6. Complete: Finalize payment and rating
+```
 
 ## 🔧 Configuration
 

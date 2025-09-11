@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manyanza Admin - Pricing Configuration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+        }
+
+        .current-config {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .current-config h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .config-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .config-item:last-child {
+            border-bottom: none;
+        }
+
+        .config-label {
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .config-value {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+        }
+
+        .corridor-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .corridor-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .corridor-item label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .corridor-item input {
+            font-size: 0.9rem;
+            padding: 8px 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo" aria-label="Manyanza Company Limited Home">
+                <img src="/images/manyanza-logo.svg" alt="" class="logo-img" onerror="this.style.display='none';">
+                <span class="logo-text">Manyanza</span>
+            </a>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="/admin" class="nav-link active" aria-label="Admin Dashboard">
+                        Admin Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/pricing" class="nav-link" aria-label="Pricing Configuration">
+                        Pricing Configuration
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/drivers" class="nav-link" aria-label="Driver Management">
+                        Driver Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/riders" class="nav-link" aria-label="Rider Management">
+                        Rider Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/support" class="nav-link" aria-label="Support">
+                        Support
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Manyanza Admin</h1>
+            <p>Pricing Configuration Dashboard</p>
+        </div>
+
+        <div id="alert-container"></div>
+
+        <div class="current-config" id="current-config">
+            <h3>📊 Current Pricing Configuration</h3>
+            <div id="config-display">
+                <div class="loading">Loading current configuration...</div>
+            </div>
+        </div>
+
+        <form id="pricing-form">
+            <div class="form-group">
+                <label for="rate-per-km">💰 Rate per Kilometer (TSh)</label>
+                <input type="number" id="rate-per-km" name="RATE_PER_KM" min="1" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="per-diem">🏨 Per-Diem Rate (TSh/night)</label>
+                <input type="number" id="per-diem" name="PER_DIEM_RATE" min="0" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label for="commission">📈 Platform Commission (%)</label>
+                <input type="number" id="commission" name="PLATFORM_COMMISSION_DEFAULT" min="0" max="100" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label for="waiting-fee">⏰ Waiting Fee (TSh/hour)</label>
+                <input type="number" id="waiting-fee" name="WAITING_FEE_PER_HOUR" min="0" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label>🛣️ Corridor Return Allowances (TSh)</label>
+                <div class="corridor-group" id="corridor-group">
+                    <!-- Corridor inputs will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="admin-key">🔑 Admin Key</label>
+                <input type="password" id="admin-key" placeholder="Enter admin key" required>
+            </div>
+
+            <button type="submit" class="btn">💾 Update Pricing</button>
+            <button type="button" class="btn btn-secondary" onclick="loadCurrentConfig()">🔄 Refresh</button>
+        </form>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin.replace(':8080', ':5000');
+        
+        async function loadCurrentConfig() {
+            try {
+                document.getElementById('config-display').innerHTML = '<div class="loading">Loading...</div>';
+                
+                const response = await fetch(`${API_BASE}/api/admin/pricing`);
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    displayCurrentConfig(result.data);
+                    populateForm(result.data);
+                } else {
+                    showAlert('Failed to load configuration', 'error');
+                }
+            } catch (error) {
+                showAlert('Error loading configuration: ' + error.message, 'error');
+            }
+        }
+
+        function displayCurrentConfig(config) {
+            const display = document.getElementById('config-display');
+            display.innerHTML = `
+                <div class="config-item">
+                    <span class="config-label">Rate per Kilometer:</span>
+                    <span class="config-value">TSh ${config.RATE_PER_KM.toLocaleString()}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Per-Diem Rate:</span>
+                    <span class="config-value">TSh ${config.PER_DIEM_RATE.toLocaleString()}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Platform Commission:</span>
+                    <span class="config-value">${(config.PLATFORM_COMMISSION_DEFAULT * 100).toFixed(1)}%</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Last Updated:</span>
+                    <span class="config-value">${new Date(config.LAST_UPDATED).toLocaleString()}</span>
+                </div>
+            `;
+        }
+
+        function populateForm(config) {
+            document.getElementById('rate-per-km').value = config.RATE_PER_KM;
+            document.getElementById('per-diem').value = config.PER_DIEM_RATE;
+            document.getElementById('commission').value = (config.PLATFORM_COMMISSION_DEFAULT * 100);
+            document.getElementById('waiting-fee').value = config.WAITING_FEE_PER_HOUR;
+            
+            // Populate corridor allowances
+            const corridorGroup = document.getElementById('corridor-group');
+            corridorGroup.innerHTML = '';
+            
+            Object.entries(config.CORRIDOR_ALLOWANCES).forEach(([corridor, allowance]) => {
+                const corridorDiv = document.createElement('div');
+                corridorDiv.className = 'corridor-item';
+                corridorDiv.innerHTML = `
+                    <label for="corridor-${corridor}">${corridor}</label>
+                    <input type="number" id="corridor-${corridor}" name="corridor_${corridor}" value="${allowance}" min="0">
+                `;
+                corridorGroup.appendChild(corridorDiv);
+            });
+        }
+
+        function showAlert(message, type) {
+            const container = document.getElementById('alert-container');
+            container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        document.getElementById('pricing-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const adminKey = formData.get('admin-key');
+            
+            if (!adminKey) {
+                showAlert('Admin key is required', 'error');
+                return;
+            }
+
+            // Collect corridor allowances
+            const corridorAllowances = {};
+            document.querySelectorAll('[name^="corridor_"]').forEach(input => {
+                const corridor = input.name.replace('corridor_', '');
+                corridorAllowances[corridor] = parseFloat(input.value);
+            });
+
+            const updateData = {
+                RATE_PER_KM: parseFloat(formData.get('RATE_PER_KM')),
+                PER_DIEM_RATE: parseFloat(formData.get('PER_DIEM_RATE')),
+                PLATFORM_COMMISSION_DEFAULT: parseFloat(formData.get('PLATFORM_COMMISSION_DEFAULT')) / 100,
+                WAITING_FEE_PER_HOUR: parseFloat(formData.get('WAITING_FEE_PER_HOUR')),
+                CORRIDOR_ALLOWANCES: corridorAllowances
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/pricing`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Key': adminKey
+                    },
+                    body: JSON.stringify(updateData)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    showAlert('✅ Pricing configuration updated successfully!', 'success');
+                    loadCurrentConfig();
+                    document.getElementById('admin-key').value = '';
+                } else {
+                    showAlert('❌ ' + (result.error || 'Failed to update configuration'), 'error');
+                }
+            } catch (error) {
+                showAlert('❌ Error updating configuration: ' + error.message, 'error');
+            }
+        });
+
+        // Load current configuration on page load
+        window.addEventListener('load', loadCurrentConfig);
+    </script>
+</body>
+</html>

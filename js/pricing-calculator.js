@@ -3,8 +3,8 @@
 
 class ManyanzaPricingEngine {
     constructor() {
-        // Pricing Parameters (TSh)
-        this.RATE_PER_KM = 1500;
+        // Pricing Parameters (TSh) - will be loaded from API
+        this.RATE_PER_KM = 700; // Default, will be updated from API
         this.PER_DIEM_RATE = 50000;
         this.WAITING_FEE_PER_HOUR = 15000;
         this.FREE_WAITING_HOURS = 2;
@@ -21,7 +21,48 @@ class ManyanzaPricingEngine {
         // Default return allowance for custom routes
         this.DEFAULT_RETURN_ALLOWANCE = 75000;
         
+        // API configuration
+        this.API_BASE = window.location.origin.replace(':8080', ':5000');
+        
+        // Load dynamic pricing from API
+        this.loadPricingConfig();
+        
         this.initializeCalculator();
+    }
+
+    async loadPricingConfig() {
+        try {
+            const response = await fetch(`${this.API_BASE}/api/admin/pricing`);
+            if (response.ok) {
+                const result = await response.json();
+                if (result.status === 'success') {
+                    // Update pricing parameters from API
+                    this.RATE_PER_KM = result.data.RATE_PER_KM;
+                    this.PER_DIEM_RATE = result.data.PER_DIEM_RATE;
+                    this.WAITING_FEE_PER_HOUR = result.data.WAITING_FEE_PER_HOUR;
+                    
+                    // Update return allowances
+                    const corridorAllowances = result.data.CORRIDOR_ALLOWANCES;
+                    this.RETURN_ALLOWANCES = {
+                        'dar-tunduma': corridorAllowances.Tunduma || 65000,
+                        'dar-rusumo': corridorAllowances.Rusumo || 90000,
+                        'dar-mutukula': corridorAllowances.Mutukula || 95000,
+                        'dar-kabanga': corridorAllowances.Kabanga || 85000,
+                        'dar-kasumulu': corridorAllowances.Kasumulu || 70000
+                    };
+                    
+                    console.log('✅ Pricing config loaded:', {
+                        ratePerKm: this.RATE_PER_KM,
+                        perDiem: this.PER_DIEM_RATE,
+                        updatedAt: result.data.LAST_UPDATED
+                    });
+                }
+            } else {
+                console.warn('⚠️ Could not load dynamic pricing, using defaults');
+            }
+        } catch (error) {
+            console.warn('⚠️ Error loading pricing config, using defaults:', error.message);
+        }
     }
 
     initializeCalculator() {
@@ -304,7 +345,7 @@ class ManyanzaPricingEngine {
         const { calc, data } = this.lastCalculation;
         
         const message = this.generateWhatsAppMessage(calc, data);
-        const phoneNumber = '+255XXXXXXXXX'; // Replace with actual WhatsApp number
+        const phoneNumber = '+255765111131'; // Manyanza Company Limited WhatsApp
         const encodedMessage = encodeURIComponent(message);
         const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         
