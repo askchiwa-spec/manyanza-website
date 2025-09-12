@@ -152,20 +152,7 @@ pages.forEach(page => {
 });
 
 // 404 handler for missing pages
-app.get('*', (req, res, next) => {
-    // If it's an API request, return JSON error
-    if (req.path.startsWith('/api/')) {
-        return res.status(404).json({
-            error: 'API endpoint not found',
-            path: req.path,
-            method: req.method,
-            timestamp: new Date().toISOString()
-        });
-    }
-    
-    // For other requests, serve 404 page or redirect to home
-    res.status(404).sendFile(path.join(__dirname, '..', 'index.html'));
-});
+
 
 // Global error handler
 app.use((error, req, res, next) => {
@@ -227,6 +214,22 @@ process.on('SIGINT', () => {
             process.exit(0);
         });
     });
+});
+
+// 404 handler for missing pages
+app.get('*', (req, res, next) => {
+    // If it's an API request, return JSON error
+    if (req.path.startsWith('/api/')) {
+        return res.status(404).json({
+            error: 'API endpoint not found',
+            path: req.path,
+            method: req.method,
+            timestamp: new Date().toISOString()
+        });
+    }
+    
+    // For other requests, serve 404 page or redirect to home
+    res.status(404).sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 module.exports = app;

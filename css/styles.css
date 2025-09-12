@@ -1,3 +1,69 @@
+/* Add the new color variables at the top of the file */
+:root {
+  --primary-color: #D4AF37; /* Gold */
+  --secondary-color: #001B33; /* Dark Blue */
+  --accent-color: #4682B4; /* Light Blue */
+  --text-light: #FFFFFF; /* White */
+}
+
+/* Update existing styles to use the new color scheme */
+
+/* Primary Color: Gold */
+.primary-color, .btn-primary {
+    color: var(--primary-color);
+    background-color: var(--primary-color);
+}
+
+/* Secondary Color: Dark Blue */
+.secondary-color, .bg-secondary {
+    color: var(--secondary-color);
+    background-color: var(--secondary-color);
+}
+
+/* Accent Color: Light Blue */
+.accent-color {
+    color: var(--accent-color);
+}
+
+/* Text Color on Dark Background */
+.text-light {
+    color: var(--text-light);
+}
+
+/* Navigation Logo */
+.navbar .nav-logo .logo-text {
+    color: var(--primary-color); /* Gold */
+}
+
+/* Footer Logo */
+.footer .footer-logo-img {
+    filter: brightness(0) saturate(100%) invert(25%) sepia(90%) saturate(400%) hue-rotate(10deg) brightness(95%) contrast(100%);
+    /* Adjust filter to match gold color */
+}
+
+/* Primary Buttons */
+.btn.btn-primary {
+    background-color: var(--primary-color); /* Gold */
+    border-color: var(--primary-color);
+    color: var(--secondary-color); /* Dark text on gold background */
+}
+
+.btn.btn-primary:hover {
+    background-color: #B8860B; /* Slightly darker gold */
+    border-color: #B8860B;
+}
+
+/* Footer Container */
+.footer-container {
+    background-color: var(--secondary-color); /* Dark Blue */
+    color: var(--text-light); /* White */
+}
+
+/* Section Titles */
+.section-title {
+    color: var(--primary-color); /* Gold */
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;

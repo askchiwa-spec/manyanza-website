@@ -213,6 +213,58 @@ router.post('/retry/:notificationId', async (req, res) => {
     }
 });
 
+// Get notification settings (admin only)
+router.get('/settings', async (req, res) => {
+    try {
+        // For now, we'll return static settings
+        // In a real implementation, this would come from a database table
+        const settings = {
+            enabledChannels: ['sms', 'whatsapp', 'email'],
+            defaultTemplates: {
+                bookingConfirmation: 'Your booking {{bookingId}} has been confirmed.',
+                driverAssigned: 'Driver {{driverName}} has been assigned to your booking.',
+                paymentReceived: 'Payment for booking {{bookingId}} has been received.',
+                bookingCompleted: 'Your booking {{bookingId}} has been completed. Thank you!'
+            },
+            schedule: {
+                morningDigest: '08:00',
+                eveningDigest: '18:00'
+            },
+            retryPolicy: {
+                maxRetries: 3,
+                retryInterval: 300 // seconds
+            }
+        };
+
+        res.json({ success: true, settings });
+    } catch (error) {
+        console.error('Get notification settings error:', error);
+        res.status(500).json({ error: 'Failed to fetch notification settings' });
+    }
+});
+
+// Update notification settings (admin only)
+router.put('/settings', async (req, res) => {
+    try {
+        const { settings } = req.body;
+        
+        if (!settings) {
+            return res.status(400).json({ error: 'Settings data required' });
+        }
+
+        // TODO: Implement actual settings storage
+        console.log('Notification settings update requested:', settings);
+
+        res.json({ 
+            success: true, 
+            message: 'Notification settings updated successfully' 
+        });
+    } catch (error) {
+        console.error('Update notification settings error:', error);
+        res.status(500).json({ error: 'Failed to update notification settings' });
+    }
+});
+
 // Send emergency alert
 router.post('/emergency', async (req, res) => {
     try {

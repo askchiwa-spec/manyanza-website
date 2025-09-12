@@ -21,7 +21,7 @@ function authenticateToken(req, res, next) {
                 code: 'TOKEN_MISSING'
             });
         }
-        return res.redirect('/login?redirect=' + encodeURIComponent(req.originalUrl));
+        return res.redirect('/login.html?redirect=' + encodeURIComponent(req.originalUrl));
     }
     
     try {
@@ -46,7 +46,7 @@ function authenticateToken(req, res, next) {
                 });
             }
         }
-        return res.redirect('/login?error=token_expired');
+        return res.redirect('/login.html?error=token_expired');
     }
 }
 

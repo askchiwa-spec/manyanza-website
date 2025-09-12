@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Vehicles - TunaRide Vehicle Transit</title>
+    <link rel="icon" type="image/x-icon" href="/images/manyanza-logo.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #667eea;
+            object-fit: cover;
+        }
+
+        .user-info h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .vehicles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .vehicles-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-icon.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-icon.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .card-icon.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .card-icon.info {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .vehicle-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .vehicle-name {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+
+        .vehicle-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-maintenance {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .vehicle-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .vehicle-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-edit {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .btn-edit:hover {
+            background: #dee2e6;
+        }
+
+        .btn-delete {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .btn-delete:hover {
+            background: #f5c6cb;
+        }
+
+        .btn-maintenance {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .btn-maintenance:hover {
+            background: #ffeeba;
+        }
+
+        .add-vehicle-form {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .form-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .vehicle-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .vehicle-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <img src="/images/tunaride-logo.svg" alt="TunaRide Logo" class="user-avatar" style="width: 60px; height: 60px;">
+                <div class="user-info">
+                    <h1>My Vehicles</h1>
+                    <p>Manage your vehicle fleet and availability</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="driver-dashboard.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+                <button onclick="logout()" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Vehicles Grid -->
+        <div class="vehicles-grid">
+            <!-- Vehicle List -->
+            <div class="vehicles-card">
+                <div class="card-header">
+                    <div class="card-icon primary">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="card-title">Registered Vehicles</h3>
+                </div>
+                
+                <div class="vehicle-item">
+                    <div class="vehicle-header">
+                        <div class="vehicle-name">Toyota Hilux (T 567 XYZ)</div>
+                        <div class="vehicle-status status-active">Active</div>
+                    </div>
+                    <div class="vehicle-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Year</div>
+                            <div class="detail-value">2022</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Color</div>
+                            <div class="detail-value">White</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Capacity</div>
+                            <div class="detail-value">1.5T</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Trips</div>
+                            <div class="detail-value">89</div>
+                        </div>
+                    </div>
+                    <div class="vehicle-actions">
+                        <button class="action-btn btn-edit" onclick="editVehicle('1')">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="action-btn btn-maintenance" onclick="scheduleMaintenance('1')">
+                            <i class="fas fa-wrench"></i> Maintenance
+                        </button>
+                        <button class="action-btn btn-delete" onclick="deleteVehicle('1')">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="vehicle-item">
+                    <div class="vehicle-header">
+                        <div class="vehicle-name">Nissan Navara (T 234 ABC)</div>
+                        <div class="vehicle-status status-maintenance">Maintenance</div>
+                    </div>
+                    <div class="vehicle-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Year</div>
+                            <div class="detail-value">2020</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Color</div>
+                            <div class="detail-value">Silver</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Capacity</div>
+                            <div class="detail-value">1.2T</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Trips</div>
+                            <div class="detail-value">67</div>
+                        </div>
+                    </div>
+                    <div class="vehicle-actions">
+                        <button class="action-btn btn-edit" onclick="editVehicle('2')">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="action-btn btn-maintenance" onclick="scheduleMaintenance('2')">
+                            <i class="fas fa-wrench"></i> Maintenance
+                        </button>
+                        <button class="action-btn btn-delete" onclick="deleteVehicle('2')">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="showAddVehicleForm()">
+                    <i class="fas fa-plus"></i> Add New Vehicle
+                </button>
+            </div>
+
+            <!-- Add Vehicle Form -->
+            <div class="vehicles-card">
+                <div class="card-header">
+                    <div class="card-icon success">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h3 class="card-title">Add New Vehicle</h3>
+                </div>
+                <form id="addVehicleForm">
+                    <div class="form-group">
+                        <label for="vehicleMake">Vehicle Make</label>
+                        <input type="text" id="vehicleMake" name="vehicleMake" placeholder="e.g., Toyota, Nissan" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleModel">Vehicle Model</label>
+                        <input type="text" id="vehicleModel" name="vehicleModel" placeholder="e.g., Hilux, Navara" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehicleYear">Year</label>
+                            <input type="number" id="vehicleYear" name="vehicleYear" placeholder="e.g., 2020" min="1990" max="2025" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehiclePlate">License Plate</label>
+                            <input type="text" id="vehiclePlate" name="vehiclePlate" placeholder="e.g., T 123 ABC" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehicleColor">Color</label>
+                            <input type="text" id="vehicleColor" name="vehicleColor" placeholder="e.g., White, Blue" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleCapacity">Cargo Capacity (Tons)</label>
+                            <input type="number" id="vehicleCapacity" name="vehicleCapacity" placeholder="e.g., 1.5" step="0.1" min="0.1" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleDescription">Description</label>
+                        <input type="text" id="vehicleDescription" name="vehicleDescription" placeholder="Additional vehicle details">
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-plus"></i> Register Vehicle
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script>
+        // Set up form handler
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('addVehicleForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showToast('Vehicle registered successfully!');
+                this.reset();
+            });
+        });
+
+        function showAddVehicleForm() {
+            document.getElementById('addVehicleForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function editVehicle(id) {
+            showToast(`Edit vehicle functionality would open for vehicle ID: ${id}`);
+        }
+
+        function deleteVehicle(id) {
+            if (confirm('Are you sure you want to remove this vehicle from your fleet?')) {
+                showToast('Vehicle removed successfully!');
+            }
+        }
+
+        function scheduleMaintenance(id) {
+            showToast('Maintenance scheduled successfully!');
+        }
+
+        function logout() {
+            // Clear any stored authentication data
+            localStorage.removeItem('authToken');
+            showToast('Logged out successfully');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

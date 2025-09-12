@@ -42,16 +42,16 @@ const authenticateAdmin = (req, res, next) => {
 // Admin login
 router.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
         
-        if (!username || !password) {
-            return res.status(400).json({ error: 'Username and password required' });
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password required' });
         }
         
         // Get admin user
         db.get(
-            'SELECT * FROM admin_users WHERE username = ? AND is_active = 1',
-            [username],
+            'SELECT * FROM users WHERE email = ? AND role = "super_admin" AND is_active = 1',
+            [email],
             async (err, user) => {
                 if (err) {
                     return res.status(500).json({ error: 'Database error' });
@@ -63,13 +63,13 @@ router.post('/login', async (req, res) => {
                 
                 // Update last login
                 db.run(
-                    'UPDATE admin_users SET last_login_at = datetime(\"now\") WHERE id = ?',
+                    'UPDATE users SET last_login_at = datetime("now"), last_admin_action = datetime("now") WHERE id = ?',
                     [user.id]
                 );
                 
                 // Generate JWT token
                 const token = jwt.sign(
-                    { id: user.id, username: user.username, role: user.role },
+                    { id: user.id, email: user.email, role: user.role },
                     process.env.JWT_SECRET,
                     { expiresIn: '8h' }
                 );
@@ -79,10 +79,11 @@ router.post('/login', async (req, res) => {
                     token,
                     user: {
                         id: user.id,
-                        username: user.username,
                         email: user.email,
                         full_name: user.full_name,
-                        role: user.role
+                        role: user.role,
+                        admin_level: user.admin_level,
+                        permissions: user.permissions
                     }
                 });
             }

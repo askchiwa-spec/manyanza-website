@@ -238,7 +238,7 @@ router.patch('/:id/status', async (req, res) => {
         `, [
             status, 
             status === 'approved' ? new Date().toISOString() : null,
-            status === 'approved' ? 'admin' : null,
+            status === 'approved' ? req.user?.id || 'admin' : null,
             driverId
         ], function(err) {
             if (err) {
@@ -284,6 +284,177 @@ router.get('/:id/documents', async (req, res) => {
     } catch (error) {
         console.error('Get driver documents error:', error);
         res.status(500).json({ error: 'Failed to fetch documents' });
+    }
+});
+
+// Update driver availability (for drivers to set themselves as available/unavailable)
+router.patch('/:id/availability', async (req, res) => {
+    try {
+        const driverId = req.params.id;
+        const { isAvailable } = req.body;
+
+        if (typeof isAvailable !== 'boolean') {
+            return res.status(400).json({ error: 'isAvailable must be a boolean value' });
+        }
+
+        db.run(`
+            UPDATE users 
+            SET is_available = ?, updated_at = datetime('now')
+            WHERE id = ? AND role = 'driver'
+        `, [isAvailable ? 1 : 0, driverId], function(err) {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to update availability' });
+            }
+
+            if (this.changes === 0) {
+                return res.status(404).json({ error: 'Driver not found' });
+            }
+
+            res.json({ 
+                success: true, 
+                message: `Driver availability updated to ${isAvailable ? 'available' : 'unavailable'}`,
+                isAvailable
+            });
+        });
+
+    } catch (error) {
+        console.error('Update driver availability error:', error);
+        res.status(500).json({ error: 'Failed to update driver availability' });
+    }
+});
+
+// Update driver profile (for drivers to update their own information)
+router.patch('/:id/profile', async (req, res) => {
+    try {
+        const driverId = req.params.id;
+        const {
+            fullName,
+            email,
+            phoneNumber,
+            address,
+            emergencyContactName,
+            emergencyContactPhone,
+            preferredCorridors
+        } = req.body;
+
+        // Build dynamic update query
+        const fields = [];
+        const params = [];
+
+        if (fullName !== undefined) {
+            fields.push('full_name = ?');
+            params.push(fullName);
+        }
+
+        if (email !== undefined) {
+            fields.push('email = ?');
+            params.push(email);
+        }
+
+        if (phoneNumber !== undefined) {
+            fields.push('phone_number = ?');
+            params.push(phoneNumber);
+        }
+
+        if (address !== undefined) {
+            fields.push('address = ?');
+            params.push(address);
+        }
+
+        if (emergencyContactName !== undefined) {
+            fields.push('emergency_contact_name = ?');
+            params.push(emergencyContactName);
+        }
+
+        if (emergencyContactPhone !== undefined) {
+            fields.push('emergency_contact_phone = ?');
+            params.push(emergencyContactPhone);
+        }
+
+        if (preferredCorridors !== undefined) {
+            fields.push('preferred_corridors = ?');
+            params.push(JSON.stringify(preferredCorridors));
+        }
+
+        if (fields.length === 0) {
+            return res.status(400).json({ error: 'No fields to update' });
+        }
+
+        // Add driver ID to params
+        params.push(driverId);
+
+        const query = `
+            UPDATE users 
+            SET ${fields.join(', ')}, updated_at = datetime('now')
+            WHERE id = ? AND role = 'driver'
+        `;
+
+        db.run(query, params, function(err) {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to update profile' });
+            }
+
+            if (this.changes === 0) {
+                return res.status(404).json({ error: 'Driver not found' });
+            }
+
+            res.json({ 
+                success: true, 
+                message: 'Driver profile updated successfully'
+            });
+        });
+
+    } catch (error) {
+        console.error('Update driver profile error:', error);
+        res.status(500).json({ error: 'Failed to update driver profile' });
+    }
+});
+
+// Get driver statistics (admin only)
+router.get('/:id/stats', async (req, res) => {
+    try {
+        const driverId = req.params.id;
+
+        // Get driver basic info
+        db.get(`
+            SELECT 
+                id, full_name, driver_status, rating, total_trips, total_earnings,
+                experience_years, is_available, created_at, last_login_at
+            FROM users 
+            WHERE id = ? AND role = 'driver'
+        `, [driverId], (err, driver) => {
+            if (err) {
+                return res.status(500).json({ error: 'Database error' });
+            }
+
+            if (!driver) {
+                return res.status(404).json({ error: 'Driver not found' });
+            }
+
+            // Get recent bookings
+            db.all(`
+                SELECT 
+                    id, booking_id, status, estimated_cost, created_at
+                FROM bookings 
+                WHERE driver_id = ?
+                ORDER BY created_at DESC
+                LIMIT 10
+            `, [driverId], (err, recentBookings) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Database error' });
+                }
+
+                res.json({
+                    success: true,
+                    driver,
+                    recentBookings
+                });
+            });
+        });
+
+    } catch (error) {
+        console.error('Get driver stats error:', error);
+        res.status(500).json({ error: 'Failed to fetch driver statistics' });
     }
 });
 

@@ -24,14 +24,30 @@ if (!envValidation.valid) {
 }
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Initialize services
 const rateLimitingService = new RateLimitingService();
 const errorHandler = new ErrorHandler();
 
 // Security middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://cdnjs.cloudflare.com'],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com'],
+      fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com', 'data:'],
+      imgSrc: ["'self'", 'data:', 'https:'],
+      connectSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
+      frameAncestors: ["'none'"]
+    }
+  }
+}));
+
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
         ? ['https://askchiwa-spec.github.io', 'https://manyanza.co.tz']
@@ -79,24 +95,16 @@ app.use('/api/auth', authRouter);
 app.use('/api/webhooks', rateLimitingService.getWhatsAppRateLimit(), require('./routes/webhooks'));
 app.use('/api/bookings', require('./routes/bookings'));
 app.use('/api/drivers', require('./routes/drivers'));
+app.use('/api/clients', require('./routes/clients'));
 app.use('/api/admin', rateLimitingService.getAdminRateLimit(), require('./routes/admin'));
 app.use('/api/payments', require('./routes/payments'));
+app.use('/api/payment-settings', require('./routes/payment-settings'));
 app.use('/api/notifications', require('./routes/notifications'));
+app.use('/api/system', require('./routes/system'));
 
 // Root endpoint
 app.get('/', (req, res) => {
-    res.json({
-        name: 'Manyanza Backend API',
-        status: 'running',
-        version: '1.0.0',
-        timestamp: new Date().toISOString(),
-        message: 'Welcome to Manyanza Company Limited API',
-        endpoints: {
-            '/health': 'Health check',
-            '/api': 'API documentation',
-            '/api/webhooks/twilio': 'WhatsApp webhook'
-        }
-    });
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // Health check endpoint
@@ -126,6 +134,27 @@ app.get('/api', (req, res) => {
             'POST /api/notifications/send': 'Send notifications'
         },
         documentation: '/api/docs'
+    });
+});
+
+// Serve static files from the parent directory (website files)
+app.use(express.static(path.join(__dirname, '..')));
+
+// Serve login page
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'login.html'));
+});
+
+// Serve dashboard page
+app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'dashboard.html'));
+});
+
+// Serve other HTML pages
+const pages = ['about', 'services', 'pricing-calculator', 'become-driver', 'contact', 'admin', 'client-dashboard', 'driver-dashboard', 'admin-dashboard', 'client-register', 'driver-register', 'settings', 'my-bookings', 'driver-bookings', 'driver-earnings', 'driver-profile', 'driver-reports', 'driver-vehicles'];
+pages.forEach(page => {
+    app.get(`/${page}`, (req, res) => {
+        res.sendFile(path.join(__dirname, '..', `${page}.html`));
     });
 });
 

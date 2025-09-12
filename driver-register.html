@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver Registration - Manyanza Vehicle Transit</title>
+    <title>Driver Registration - TunaRide Vehicle Transit</title>
     <link rel="icon" type="image/x-icon" href="/images/manyanza-logo.svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -197,13 +197,13 @@
 <body>
     <div class="register-container">
         <div class="header">
-            <img src="/images/manyanza-logo.svg" alt="Manyanza Logo" style="width: 100px; height: auto; margin-bottom: 20px;">
+            <img src="/images/tunaride-logo.svg" alt="TunaRide Logo" style="width: 100px; height: auto; margin-bottom: 20px;">
             <h1>🚗 Driver Registration</h1>
-            <p>Join Manyanza's professional driver network</p>
+            <p>Join TunaRide's professional driver network</p>
         </div>
 
         <div class="info-box">
-            <h3>Requirements to Become a Manyanza Driver:</h3>
+            <h3>Requirements to Become a TunaRide Driver:</h3>
             <ul>
                 <li>Valid Tanzanian driver's license (minimum 3 years experience)</li>
                 <li>NIDA identification document</li>
@@ -307,7 +307,7 @@
         </form>
 
         <div class="login-link">
-            <p>Already have an account? <a href="/login?role=driver">Sign in here</a></p>
+            <p>Already have an account? <a href="login.html?role=driver">Sign in here</a></p>
         </div>
     </div>
 
@@ -342,7 +342,7 @@
                     
                     // Redirect after 3 seconds
                     setTimeout(() => {
-                        window.location.href = '/driver-pending';
+                        window.location.href = 'driver-dashboard.html';
                     }, 3000);
                 } else {
                     showAlert(result.error || 'Registration failed. Please try again.', 'error');

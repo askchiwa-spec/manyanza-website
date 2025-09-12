@@ -177,53 +177,29 @@ class PricingCalculator {
     generatePricingMessage(pricing) {
         const { breakdown, totals, metadata } = pricing;
 
-        let message = `💰 *PRICING BREAKDOWN*\n\n`;
+        let message = `🚗 *Manyanza Transit Quote*\n\n`;
         
-        // Service components
-        message += `📊 *Service Components:*\n`;
-        message += `• Distance: TSh ${breakdown.baseKmFee.amount.toLocaleString()}\n`;
-        message += `  ${breakdown.baseKmFee.description}\n\n`;
+        // Route information
+        message += `Route: ${metadata.corridorName || 'Custom Route'}\n`;
+        message += `Distance: ${metadata.distance} km\n`;
+        message += `Overnight Stays: ${metadata.nights} night(s)\n\n`;
         
-        if (breakdown.perDiemFee.amount > 0) {
-            message += `• Per Diem: TSh ${breakdown.perDiemFee.amount.toLocaleString()}\n`;
-            message += `  ${breakdown.perDiemFee.description}\n\n`;
-        }
-        
-        if (breakdown.returnTravelFee.amount > 0) {
-            message += `• Return Travel: TSh ${breakdown.returnTravelFee.amount.toLocaleString()}\n`;
-            message += `  ${breakdown.returnTravelFee.description}\n\n`;
-        }
+        // Price breakdown
+        message += `PRICE BREAKDOWN:\n`;
+        message += `* Base Distance Fee: TSh ${breakdown.baseKmFee.amount.toLocaleString()}\n`;
+        message += `* Per Diem: TSh ${breakdown.perDiemFee.amount.toLocaleString()}\n`;
+        message += `* Return Travel: TSh ${breakdown.returnTravelFee.amount.toLocaleString()}\n`;
         
         if (breakdown.waitingFee.amount > 0) {
-            message += `• Waiting Fee: TSh ${breakdown.waitingFee.amount.toLocaleString()}\n`;
-            message += `  ${breakdown.waitingFee.description}\n\n`;
+            message += `* Waiting Fee: TSh ${breakdown.waitingFee.amount.toLocaleString()}\n`;
         }
         
         if (breakdown.afterHoursFee.amount > 0) {
-            message += `• After-Hours: TSh ${breakdown.afterHoursFee.amount.toLocaleString()}\n\n`;
+            message += `* After-Hours: TSh ${breakdown.afterHoursFee.amount.toLocaleString()}\n`;
         }
-
-        // Totals
-        message += `💵 *TOTAL BREAKDOWN:*\n`;
-        message += `• Service Cost: TSh ${totals.subtotal.toLocaleString()}\n`;
-        message += `• Platform Fee (${(totals.commissionRate * 100)}%): TSh ${totals.commissionAmount.toLocaleString()}\n`;
-        message += `• *TOTAL PRICE: TSh ${totals.customerTotal.toLocaleString()}*\n\n`;
         
-        // Payment terms
-        message += `💳 *Payment Terms:*\n`;
-        const upfrontAmount = Math.round(totals.customerTotal * 0.8);
-        const remainingAmount = totals.customerTotal - upfrontAmount;
-        message += `• Upfront (80%): TSh ${upfrontAmount.toLocaleString()}\n`;
-        message += `• On Delivery: TSh ${remainingAmount.toLocaleString()}\n\n`;
-        
-        // Exclusions
-        message += `⚠️ *EXCLUDED COSTS:*\n`;
-        message += `• Fuel, tolls, port fees\n`;
-        message += `• Storage and parking\n`;
-        message += `• Statutory fees\n`;
-        message += `(Paid separately by owner/agent)\n\n`;
-        
-        message += `✅ All prices include vetted driver, insurance, and professional service.`;
+        message += `\nTOTAL: TSh ${totals.customerTotal.toLocaleString()}\n\n`;
+        message += `I'd like to book this trip or get more information about your services.`;
 
         return message;
     }

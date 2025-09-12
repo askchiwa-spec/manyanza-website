@@ -472,17 +472,25 @@ class WhatsAppBot {
     }
 
     async generateConfirmationMessage(bookingData, pricing) {
-        return `📋 *Booking Confirmation*\n\n` +
-               `📍 Pickup: ${bookingData.pickup_location}\n` +
-               `🎯 Destination: ${bookingData.destination}\n` +
-               `🚗 Vehicle: ${bookingData.vehicle_type?.toUpperCase()}\n` +
-               `📅 Date: ${bookingData.pickup_date}\n\n` +
-               `💰 *Pricing Breakdown:*\n` +
-               `• Base cost: TSh ${pricing.subtotal?.toLocaleString()}\n` +
-               `• Platform fee: TSh ${pricing.commission?.toLocaleString()}\n` +
-               `• **Total: TSh ${pricing.total?.toLocaleString()}**\n\n` +
-               `✅ Reply 'YES' to confirm\n` +
-               `❌ Reply 'NO' to modify`;
+        // Get corridor name for display
+        let corridorName = 'Custom Route';
+        if (bookingData.corridor_type) {
+            const corridor = this.corridors[bookingData.corridor_type];
+            if (corridor) {
+                corridorName = corridor.name;
+            }
+        }
+
+        return `🚗 *Manyanza Transit Quote*\n\n` +
+               `Route: ${bookingData.pickup_location} → ${bookingData.destination}\n` +
+               `Distance: ${bookingData.distance_km || 0} km\n` +
+               `Overnight Stays: ${bookingData.nights || 0} night(s)\n\n` +
+               `PRICE BREAKDOWN:\n` +
+               `* Base Distance Fee: TSh ${pricing.subtotal?.toLocaleString()}\n` +
+               `* Per Diem: TSh ${this.pricingCalculator.PER_DIEM_RATE * (bookingData.nights || 0)}\n` +
+               `* Return Travel: TSh ${this.pricingCalculator.getReturnAllowance(bookingData.corridor_type)}\n` +
+               `\nTOTAL: TSh ${pricing.total?.toLocaleString()}\n\n` +
+               `I'd like to book this trip or get more information about your services.`;
     }
 
     async createBooking(client, bookingData, pricing) {

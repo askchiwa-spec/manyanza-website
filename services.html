@@ -3,319 +3,473 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Services - Manyanza Company Limited</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Our Services - Manyanza Vehicle Transit</title>
+    <link rel="icon" type="image/x-icon" href="/images/tunaride-logo.svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #667eea;
+            object-fit: cover;
+        }
+
+        .user-info h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .card-icon.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-icon.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .card-icon.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .card-icon.info {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        }
+
+        .card-icon.danger {
+            background: linear-gradient(135deg, #dc3545 0%, #e96479 100%);
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .card-content {
+            color: #7f8c8d;
+            line-height: 1.7;
+        }
+
+        .service-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .service-detail-card {
+            padding: 15px;
+        }
+
+        .service-detail-card h4 {
+            color: #2c3e50;
+            margin: 15px 0 10px 0;
+        }
+
+        .service-detail-card:first-child h4:first-child {
+            margin-top: 0;
+        }
+
+        .features-list {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .features-list li {
+            margin-bottom: 8px;
+            color: #2c3e50;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .features-list li i {
+            margin-top: 4px;
+            color: #667eea;
+        }
+
+        .pricing-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .pricing-info h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .price-highlight {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .cta-section {
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+
+        .cta-section h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .book-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo" aria-label="Manyanza Company Limited Home">
-                <img src="images/manyanza-logo.svg" alt="" class="logo-img" onerror="this.style.display='none';">
-                <span class="logo-text">Manyanza</span>
-            </a>
-            <div class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="services.html" class="nav-link active">Services</a>
-                <a href="pricing-calculator.html" class="nav-link">Pricing</a>
-                <a href="become-driver.html" class="nav-link">Become a Driver</a>
-                <a href="contact.html" class="nav-link">Contact</a>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <img src="/images/tunaride-logo.svg" alt="TunaRide Logo" class="user-avatar">
+                <div class="user-info">
+                    <h1>Our Services</h1>
+                    <p>Professional vehicle transit across Tanzania</p>
+                </div>
             </div>
-            <div class="nav-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="header-right">
+                <a href="client-dashboard.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+                <button id="logoutBtn" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
             </div>
         </div>
-    </nav>
 
-    <!-- Services Hero -->
-    <section class="page-hero">
-        <div class="container">
-            <h1>Our Services</h1>
-            <p>Comprehensive vehicle transit solutions tailored to meet your specific transportation needs across Tanzania.</p>
-        </div>
-    </section>
-
-    <!-- Main Services -->
-    <section class="services-main">
-        <div class="container">
-            <div class="services-grid">
-                <!-- Service 1: Per-Kilometer Transit -->
-                <div class="service-card featured">
-                    <div class="service-icon">
-                        <i class="fas fa-route"></i>
+        <!-- Services Grid -->
+        <div class="services-grid">
+            <!-- Specialized Vehicle Transit Service -->
+            <div class="service-card">
+                <div class="card-header">
+                    <div class="card-icon primary">
+                        <i class="fas fa-truck-moving"></i>
                     </div>
-                    <h2>Per-Kilometer Vehicle Transit</h2>
-                    <p class="service-description">
-                        Flexible, distance-based pricing perfect for shorter routes and budget-conscious customers. 
-                        Pay only for the distance traveled with transparent, upfront pricing.
-                    </p>
-                    <div class="service-features">
-                        <div class="feature">
-                            <i class="fas fa-calculator"></i>
-                            <div>
-                                <h4>Distance-Based Pricing</h4>
-                                <p>Fair pricing calculated per kilometer traveled, ensuring you pay only for what you use.</p>
-                            </div>
+                    <h3 class="card-title">Specialized Vehicle Transit</h3>
+                </div>
+                <div class="card-content">
+                    <p>Professional vehicle transit services across Tanzania with our elite network of vetted drivers and comprehensive insurance coverage up to TSh 50 million.</p>
+                    
+                    <div class="service-details-grid">
+                        <div class="service-detail-card">
+                            <h4>Primary Focus</h4>
+                            <p>Safely driving imported vehicles from ports to border destinations</p>
+                            
+                            <h4>Service Area</h4>
+                            <p>Tanzania domestic vehicle transit</p>
+                            
+                            <h4>Pickup Points</h4>
+                            <ul class="features-list">
+                                <li><i class="fas fa-ship"></i> Dar es Salaam Port</li>
+                                <li><i class="fas fa-ship"></i> Tanga Port</li>
+                            </ul>
                         </div>
-                        <div class="feature">
-                            <i class="fas fa-undo-alt"></i>
-                            <div>
-                                <h4>Return Allowances</h4>
-                                <p>Comprehensive allowances for driver return journey, accommodation, and meals included in pricing.</p>
-                            </div>
+                        
+                        <div class="service-detail-card">
+                            <h4>Delivery Destinations</h4>
+                            <ul class="features-list">
+                                <li><i class="fas fa-border-all"></i> Tunduma Border</li>
+                                <li><i class="fas fa-border-all"></i> Rusumo Border</li>
+                                <li><i class="fas fa-border-all"></i> Mtukula Border</li>
+                                <li><i class="fas fa-border-all"></i> Malawi Border</li>
+                                <li><i class="fas fa-border-all"></i> Burundi Border</li>
+                                <li><i class="fas fa-border-all"></i> And other named border points</li>
+                            </ul>
                         </div>
-                        <div class="feature">
-                            <i class="fas fa-percent"></i>
-                            <div>
-                                <h4>15-20% Platform Fee</h4>
-                                <p>Transparent platform facilitation fee covering insurance, support, and driver verification services.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="service-cta">
-                        <a href="contact.html" class="btn btn-primary">Get Quote</a>
                     </div>
                 </div>
-
-                <!-- Service 2: Full-Package Delivery -->
-                <div class="service-card featured">
-                    <div class="service-icon">
-                        <i class="fas fa-shipping-fast"></i>
+            </div>
+            
+            <!-- Service Features and Pricing -->
+            <div class="service-card">
+                <div class="card-header">
+                    <div class="card-icon success">
+                        <i class="fas fa-star"></i>
                     </div>
-                    <h2>Full-Package Vehicle Delivery</h2>
-                    <p class="service-description">
-                        Complete end-to-end delivery solution with fixed corridor rates. Everything included - 
-                        no hidden costs, no surprises, just reliable vehicle delivery.
-                    </p>
-                    <div class="service-features">
-                        <div class="feature">
-                            <i class="fas fa-map-marked"></i>
-                            <div>
-                                <h4>Fixed Corridor Rates</h4>
-                                <p>Predetermined pricing for major routes across Tanzania, making budgeting simple and predictable.</p>
-                            </div>
+                    <h3 class="card-title">Service Promise & Pricing</h3>
+                </div>
+                <div class="card-content">
+                    <div class="service-details-grid">
+                        <div class="service-detail-card">
+                            <h4>Our Service Promise</h4>
+                            <ul class="features-list">
+                                <li><i class="fas fa-user-check"></i> Professional, vetted drivers</li>
+                                <li><i class="fas fa-shield-alt"></i> Safe and reliable vehicle transportation</li>
+                                <li><i class="fas fa-door-open"></i> Door-to-door service from port to border</li>
+                                <li><i class="fab fa-whatsapp"></i> Real-time tracking and updates via WhatsApp (+255 765 111 131)</li>
+                                <li><i class="fas fa-map-marked-alt"></i> Nationwide coverage including remote areas</li>
+                                <li><i class="fas fa-user-clock"></i> Professional, police-vetted drivers with minimum 3 years experience</li>
+                            </ul>
                         </div>
-                        <div class="feature">
-                            <i class="fas fa-bed"></i>
-                            <div>
-                                <h4>Overnight Stays Included</h4>
-                                <p>All accommodation costs for long-distance journeys are included in the package price.</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-utensils"></i>
-                            <div>
-                                <h4>Driver Allowances</h4>
-                                <p>Complete driver allowances for meals, accommodation, and return journey expenses included.</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-cog"></i>
-                            <div>
-                                <h4>Platform Facilitation</h4>
-                                <p>Full service management including driver assignment, tracking, and customer support.</p>
+                        
+                        <div class="service-detail-card">
+                            <h4>Advanced Features</h4>
+                            <ul class="features-list">
+                                <li><i class="fas fa-location-arrow"></i> Real-time GPS tracking with milestone notifications</li>
+                                <li><i class="fas fa-shield-alt"></i> Full insurance coverage included in pricing</li>
+                                <li><i class="fab fa-whatsapp"></i> 24/7 multilingual customer support via WhatsApp</li>
+                                <li><i class="fas fa-camera"></i> Photo verification at pickup and delivery</li>
+                                <li><i class="fas fa-route"></i> Route optimization for faster delivery times</li>
+                            </ul>
+                            
+                            <div class="pricing-info">
+                                <h4>Transparent Pricing</h4>
+                                <p>Standard rate: TSh 1,500 per kilometer</p>
+                                <div class="price-highlight">TSh 1,500/km</div>
+                                <p>Special corridor discounts available</p>
+                                <p>Return allowance: TSh 65,000 for round trips</p>
+                                <p>No hidden fees - price you see is the price you pay</p>
                             </div>
                         </div>
                     </div>
-                    <div class="service-cta">
-                        <a href="contact.html" class="btn btn-primary">Book Package</a>
-                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Service Features -->
-    <section class="service-features-section">
-        <div class="container">
-            <h2 class="section-title">Included with Every Service</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fab fa-whatsapp"></i>
-                    </div>
-                    <h3>WhatsApp Assistance</h3>
-                    <p>24/7 customer support through WhatsApp for booking, updates, and any questions during transit.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-map-pin"></i>
-                    </div>
-                    <h3>Milestone Updates</h3>
-                    <p>Real-time progress updates at key milestones throughout your vehicle's journey for complete peace of mind.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-credit-card"></i>
-                    </div>
-                    <h3>Secure Payment Options</h3>
-                    <p>Multiple payment methods including M-Pesa, TigoPesa, and bank transfers for local and international clients.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>Local & International Clients</h3>
-                    <p>Serving both Tanzanian residents and international clients with tailored support and flexible payment options.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Insurance Coverage</h3>
-                    <p>Comprehensive insurance protection for your vehicle throughout the transit journey.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h3>Relationship Manager</h3>
-                    <p>Dedicated relationship manager support for regular clients and complex transit requirements.</p>
-                </div>
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Ready to Book Your Transit?</h2>
+            <p>Get an instant quote and book your vehicle transit with Manyanza today. Professional service, transparent pricing, and nationwide coverage.</p>
+            <div class="cta-buttons">
+                <button class="book-btn">
+                    <i class="fas fa-calculator"></i>
+                    Calculate Price & Book Now
+                </button>
+                <button class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i>
+                    Send Booking Request
+                </button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Pricing Information -->
-    <section class="pricing-info">
-        <div class="container">
-            <div class="pricing-content">
-                <div class="pricing-text">
-                    <h2>Transparent Pricing</h2>
-                    <p>
-                        At Manyanza, we believe in honest, transparent pricing with no hidden fees. 
-                        Our pricing structure is designed to be fair for both customers and drivers.
-                    </p>
-                    <div class="pricing-features">
-                        <div class="pricing-feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>No hidden fees or surprise charges</span>
-                        </div>
-                        <div class="pricing-feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Upfront pricing before booking confirmation</span>
-                        </div>
-                        <div class="pricing-feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Competitive rates across the market</span>
-                        </div>
-                        <div class="pricing-feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Flexible payment terms for businesses</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="pricing-image">
-                    <div class="image-placeholder">
-                        <i class="fas fa-file-invoice-dollar fa-4x"></i>
-                        <p>Transparent Pricing</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Service Areas -->
-    <section class="service-areas">
-        <div class="container">
-            <h2 class="section-title">Service Coverage Areas</h2>
-            <p class="section-subtitle">We provide vehicle transit services across Tanzania's major routes and corridors</p>
-            <div class="areas-grid">
-                <div class="area-card">
-                    <h3>Dar es Salaam - Arusha</h3>
-                    <p>Main northern corridor serving business and tourism hubs</p>
-                </div>
-                <div class="area-card">
-                    <h3>Dar es Salaam - Mwanza</h3>
-                    <p>Western corridor connecting to Lake Victoria region</p>
-                </div>
-                <div class="area-card">
-                    <h3>Dar es Salaam - Mbeya</h3>
-                    <p>Southern highlands corridor to agricultural regions</p>
-                </div>
-                <div class="area-card">
-                    <h3>Dar es Salaam - Dodoma</h3>
-                    <p>Central corridor to the capital city</p>
-                </div>
-                <div class="area-card">
-                    <h3>Inter-City Routes</h3>
-                    <p>Regional connections between major cities</p>
-                </div>
-                <div class="area-card">
-                    <h3>Custom Routes</h3>
-                    <p>Specialized routing for unique destinations</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Transport Your Vehicle?</h2>
-                <p>Choose the service that best fits your needs and get a quote today.</p>
-                <div class="cta-buttons">
-                    <a href="contact.html" class="btn btn-primary">Get Quote Now</a>
-                    <a href="#" class="btn btn-outline">
-                        <i class="fab fa-whatsapp"></i> WhatsApp Direct
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="images/manyanza-logo.svg" alt="" class="footer-logo-img" onerror="this.style.display='none';">
-                        <h3>Manyanza</h3>
-                    </div>
-                    <p>Tanzania's trusted vehicle transit and driver marketplace.</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="become-driver.html">Become a Driver</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="services.html">Per-Kilometer Transit</a></li>
-                        <li><a href="services.html">Full-Package Delivery</a></li>
-                        <li><a href="services.html">WhatsApp Support</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p><i class="fab fa-whatsapp"></i> WhatsApp Support</p>
-                    <p><i class="fas fa-envelope"></i> info@manyanza.co.tz</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Dar es Salaam, Tanzania</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Manyanza Company Limited. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/script.js"></script>
+    <script>
+        // Removed inline script - functionality moved to external services.js file
+    </script>
+    <script src="js/services.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Admin Dashboard - Manyanza</title>
+    <title>Super Admin Dashboard - TunaRide</title>
     <link rel="icon" type="image/x-icon" href="/images/manyanza-logo.svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -291,8 +291,8 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <img src="/images/manyanza-logo.svg" alt="Manyanza Logo" style="width: 30px; height: 30px; margin-right: 10px; vertical-align: middle;">
-                🚗 Manyanza Admin
+                <img src="/images/tunaride-logo.svg" alt="TunaRide Logo" style="width: 30px; height: 30px; margin-right: 10px; vertical-align: middle;">
+                🚗 TunaRide Admin
             </div>
             <div class="nav-user">
                 <span id="adminName">Super Admin</span>
@@ -364,7 +364,7 @@
                     <p>Manage drivers, clients, and admins</p>
                 </div>
                 <div class="section-content">
-                    <div class="admin-action" onclick="window.location.href='/admin/drivers'">
+                    <div class="admin-action" onclick="window.location.href='admin-dashboard.html'">
                         <div class="action-icon">
                             <i class="fas fa-car"></i>
                         </div>
@@ -374,7 +374,7 @@
                         </div>
                     </div>
                     
-                    <div class="admin-action" onclick="window.location.href='/admin/clients'">
+                    <div class="admin-action" onclick="window.location.href='admin-dashboard.html'">
                         <div class="action-icon">
                             <i class="fas fa-users"></i>
                         </div>
@@ -384,7 +384,7 @@
                         </div>
                     </div>
                     
-                    <div class="admin-action" onclick="window.location.href='/admin/bookings'">
+                    <div class="admin-action" onclick="window.location.href='admin-dashboard.html'">
                         <div class="action-icon">
                             <i class="fas fa-clipboard-list"></i>
                         </div>
@@ -403,7 +403,7 @@
                     <p>Platform settings and configuration</p>
                 </div>
                 <div class="section-content">
-                    <div class="admin-action" onclick="window.location.href='/admin/settings'">
+                    <div class="admin-action" onclick="window.location.href='admin-dashboard.html'">
                         <div class="action-icon">
                             <i class="fas fa-cog"></i>
                         </div>
@@ -413,7 +413,7 @@
                         </div>
                     </div>
                     
-                    <div class="admin-action" onclick="window.location.href='/admin/payments'">
+                    <div class="admin-action" onclick="window.location.href='admin-dashboard.html'">
                         <div class="action-icon">
                             <i class="fas fa-credit-card"></i>
                         </div>
@@ -423,7 +423,7 @@
                         </div>
                     </div>
                     
-                    <div class="admin-action" onclick="window.location.href='/admin/notifications'">
+                    <div class="admin-action" onclick="window.location.href='admin-dashboard.html'">
                         <div class="action-icon">
                             <i class="fas fa-bell"></i>
                         </div>
@@ -442,7 +442,7 @@
                     <p>System insights and reporting</p>
                 </div>
                 <div class="section-content">
-                    <div class="admin-action" onclick="window.location.href='/admin/reports'">
+                    <div class="admin-action" onclick="window.location.href='admin-dashboard.html'">
                         <div class="action-icon">
                             <i class="fas fa-chart-line"></i>
                         </div>
@@ -452,7 +452,7 @@
                         </div>
                     </div>
                     
-                    <div class="admin-action" onclick="window.location.href='/admin/analytics'">
+                    <div class="admin-action" onclick="window.location.href='admin-dashboard.html'">
                         <div class="action-icon">
                             <i class="fas fa-chart-bar"></i>
                         </div>
@@ -462,7 +462,7 @@
                         </div>
                     </div>
                     
-                    <div class="admin-action" onclick="window.location.href='/admin/logs'">
+                    <div class="admin-action" onclick="window.location.href='admin-dashboard.html'">
                         <div class="action-icon">
                             <i class="fas fa-list-alt"></i>
                         </div>
@@ -477,74 +477,34 @@
     </div>
 
     <script>
-        // Check authentication on page load
+        // Check authentication on page load - Modified for static website version
         document.addEventListener('DOMContentLoaded', async () => {
-            const token = localStorage.getItem('authToken');
-            if (!token) {
-                window.location.href = '/login?role=admin';
-                return;
-            }
-
-            try {
-                // Verify authentication and role
-                const response = await fetch('/auth/status', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                
-                const data = await response.json();
-                
-                if (!data.isAuthenticated || data.user.role !== 'super_admin') {
-                    localStorage.removeItem('authToken');
-                    window.location.href = '/login?role=admin&error=access_denied';
-                    return;
-                }
-
-                // Load user profile
-                loadProfile();
-                loadDashboardStats();
-            } catch (error) {
-                console.error('Auth check failed:', error);
-                localStorage.removeItem('authToken');
-                window.location.href = '/login?role=admin';
-            }
+            // For static demo, we'll use a simple check
+            const isAdminDemo = localStorage.getItem('isAdminDemo') === 'true';
+            
+            // In a real implementation, this would check with the backend
+            // For static demo, we'll allow access for demonstration purposes
+            console.log('Admin dashboard loaded (static demo mode)');
+            
+            // Load demo data
+            loadProfile();
+            loadDashboardStats();
         });
 
-        async function loadProfile() {
-            try {
-                const token = localStorage.getItem('authToken');
-                const response = await fetch('/auth/profile', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    document.getElementById('adminName').textContent = data.user.full_name || 'Super Admin';
-                }
-            } catch (error) {
-                console.error('Failed to load profile:', error);
-            }
+        function loadProfile() {
+            // For static demo, use placeholder data
+            document.getElementById('adminName').textContent = 'Super Admin (Demo)';
         }
 
-        async function loadDashboardStats() {
-            // Load dashboard statistics
-            // This would typically fetch from API endpoints
-            try {
-                // Placeholder - implement actual API calls
-                document.getElementById('totalBookings').textContent = '156';
-                document.getElementById('activeDrivers').textContent = '23';
-                document.getElementById('totalClients').textContent = '89';
-                document.getElementById('monthlyRevenue').textContent = 'TSh 12,450,000';
-            } catch (error) {
-                console.error('Failed to load stats:', error);
-            }
+        function loadDashboardStats() {
+            // Load dashboard statistics with demo data
+            document.getElementById('totalBookings').textContent = '156';
+            document.getElementById('activeDrivers').textContent = '23';
+            document.getElementById('totalClients').textContent = '89';
+            document.getElementById('monthlyRevenue').textContent = 'TSh 12,450,000';
         }
 
-        // Pricing form submission
+        // Pricing form submission - Modified for static website version
         document.getElementById('pricingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -556,25 +516,16 @@
                 return;
             }
             
-            try {
-                const token = localStorage.getItem('authToken');
-                // Placeholder - implement actual API call
-                
-                // Update UI
-                document.getElementById('currentPriceDisplay').innerHTML = `
-                    <h3>TSh ${parseInt(newRate).toLocaleString()}</h3>
-                    <p>Current rate per kilometer</p>
-                `;
-                
-                showAlert(`Pricing updated successfully! New rate: TSh ${parseInt(newRate).toLocaleString()}/km`, 'success');
-                
-                // Reset form
-                document.getElementById('newRate').value = '';
-                
-            } catch (error) {
-                console.error('Price update failed:', error);
-                showAlert('Failed to update pricing. Please try again.', 'error');
-            }
+            // For static demo, just update the UI without backend call
+            document.getElementById('currentPriceDisplay').innerHTML = `
+                <h3>TSh ${parseInt(newRate).toLocaleString()}</h3>
+                <p>Current rate per kilometer</p>
+            `;
+            
+            showAlert(`Pricing updated successfully! New rate: TSh ${parseInt(newRate).toLocaleString()}/km`, 'success');
+            
+            // Reset form
+            document.getElementById('newRate').value = '';
         });
 
         function showAlert(message, type) {
@@ -594,8 +545,9 @@
         }
 
         function logout() {
-            localStorage.removeItem('authToken');
-            window.location.href = '/login?role=admin';
+            // For static demo, just redirect to login page
+            localStorage.removeItem('isAdminDemo');
+            window.location.href = 'login.html?role=admin';
         }
     </script>
 </body>

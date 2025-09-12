@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Earnings - TunaRide Vehicle Transit</title>
+    <link rel="icon" type="image/x-icon" href="/images/manyanza-logo.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #667eea;
+            object-fit: cover;
+        }
+
+        .user-info h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .earnings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .earnings-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-icon.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-icon.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .card-icon.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .card-icon.info {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .earnings-summary {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .total-earnings {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .earnings-period {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .earnings-breakdown {
+            margin-top: 20px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-label {
+            color: #6c757d;
+        }
+
+        .breakdown-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .positive {
+            color: #28a745;
+        }
+
+        .negative {
+            color: #dc3545;
+        }
+
+        .chart-container {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            padding: 20px 0;
+            border-bottom: 1px solid #e9ecef;
+            margin: 20px 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            min-height: 5px;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .payout-info {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .payout-info h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .payout-info p {
+            color: #388e3c;
+            margin-bottom: 15px;
+        }
+
+        .withdraw-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .withdraw-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .transaction-history {
+            margin-top: 30px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .transaction-details {
+            flex: 1;
+        }
+
+        .transaction-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .transaction-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .transaction-amount {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .total-earnings {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <img src="/images/tunaride-logo.svg" alt="TunaRide Logo" class="user-avatar" style="width: 60px; height: 60px;">
+                <div class="user-info">
+                    <h1>Earnings Dashboard</h1>
+                    <p>Track your income and withdrawal history</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="driver-dashboard.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+                <button onclick="logout()" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Earnings Grid -->
+        <div class="earnings-grid">
+            <!-- Earnings Summary -->
+            <div class="earnings-card">
+                <div class="card-header">
+                    <div class="card-icon success">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3 class="card-title">Earnings Summary</h3>
+                </div>
+                <div class="earnings-summary">
+                    <div class="total-earnings">TSh 2,450,000</div>
+                    <div class="earnings-period">Total Earnings (Lifetime)</div>
+                </div>
+                
+                <div class="earnings-breakdown">
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">This Month</span>
+                        <span class="breakdown-value positive">TSh 425,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">This Week</span>
+                        <span class="breakdown-value positive">TSh 98,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Platform Fee (18%)</span>
+                        <span class="breakdown-value negative">-TSh 441,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Available for Withdrawal</span>
+                        <span class="breakdown-value positive">TSh 1,250,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings Chart -->
+            <div class="earnings-card">
+                <div class="card-header">
+                    <div class="card-icon info">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="card-title">Monthly Earnings</h3>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-bar" style="height: 30%;"></div>
+                    <div class="chart-bar" style="height: 50%;"></div>
+                    <div class="chart-bar" style="height: 70%;"></div>
+                    <div class="chart-bar" style="height: 90%;"></div>
+                    <div class="chart-bar" style="height: 60%;"></div>
+                    <div class="chart-bar" style="height: 80%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="chart-label">Apr</div>
+                    <div class="chart-label">May</div>
+                    <div class="chart-label">Jun</div>
+                    <div class="chart-label">Jul</div>
+                    <div class="chart-label">Aug</div>
+                    <div class="chart-label">Sep</div>
+                </div>
+            </div>
+
+            <!-- Payout Information -->
+            <div class="earnings-card">
+                <div class="card-header">
+                    <div class="card-icon warning">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="card-title">Withdraw Earnings</h3>
+                </div>
+                <div class="payout-info">
+                    <h4>Ready for Withdrawal</h4>
+                    <div class="total-earnings" style="font-size: 2rem;">TSh 1,250,000</div>
+                    <p>Your earnings are available for withdrawal to your bank account or mobile money.</p>
+                    <button class="withdraw-btn">
+                        <i class="fas fa-paper-plane"></i> Request Withdrawal
+                    </button>
+                </div>
+                
+                <div class="earnings-breakdown" style="margin-top: 20px;">
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Bank Transfer</span>
+                        <span class="breakdown-value">0-2 Business Days</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Mobile Money</span>
+                        <span class="breakdown-value">Instant</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Processing Fee</span>
+                        <span class="breakdown-value">TSh 2,500</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="earnings-card">
+                <div class="card-header">
+                    <div class="card-icon primary">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <h3 class="card-title">Recent Transactions</h3>
+                </div>
+                <div class="transaction-history">
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <div class="transaction-title">Booking Payment - MZ-2025-001</div>
+                            <div class="transaction-date">Sep 10, 2025</div>
+                        </div>
+                        <div class="transaction-amount positive">+TSh 212,500</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <div class="transaction-title">Booking Payment - MZ-2025-003</div>
+                            <div class="transaction-date">Sep 5, 2025</div>
+                        </div>
+                        <div class="transaction-amount positive">+TSh 187,000</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <div class="transaction-title">Platform Fee Deduction</div>
+                            <div class="transaction-date">Sep 1, 2025</div>
+                        </div>
+                        <div class="transaction-amount negative">-TSh 75,650</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <div class="transaction-title">Booking Payment - MZ-2025-002</div>
+                            <div class="transaction-date">Aug 28, 2025</div>
+                        </div>
+                        <div class="transaction-amount positive">+TSh 325,000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            // Clear any stored authentication data
+            localStorage.removeItem('authToken');
+            alert('Logged out successfully');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

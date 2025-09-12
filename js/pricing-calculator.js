@@ -356,16 +356,16 @@ class ManyanzaPricingEngine {
         const message = `
 🚗 *Manyanza Transit Quote*
 
-*Route:* ${data.pickup} → ${data.destination}
-*Distance:* ${data.km} km
-*Overnight Stays:* ${data.nights} night(s)
+Route: ${data.pickup} → ${data.destination}
+Distance: ${data.km} km
+Overnight Stays: ${data.nights} night(s)
 
-*PRICE BREAKDOWN:*
-• Base Distance Fee: ${this.formatCurrency(calc.baseKmFee)}
-• Per Diem: ${this.formatCurrency(calc.perDiem)}
-• Return Travel: ${this.formatCurrency(calc.returnTravel)}
-${calc.waitingFee > 0 ? `• Waiting Fee: ${this.formatCurrency(calc.waitingFee)}\n` : ''}${calc.afterHoursFee > 0 ? `• After-Hours: ${this.formatCurrency(calc.afterHoursFee)}\n` : ''}
-*TOTAL: ${this.formatCurrency(calc.customerTotal)}*
+PRICE BREAKDOWN:
+* Base Distance Fee: ${this.formatCurrency(calc.baseKmFee)}
+* Per Diem: ${this.formatCurrency(calc.perDiem)}
+* Return Travel: ${this.formatCurrency(calc.returnTravel)}
+${calc.waitingFee > 0 ? `* Waiting Fee: ${this.formatCurrency(calc.waitingFee)}\n` : ''}${calc.afterHoursFee > 0 ? `* After-Hours: ${this.formatCurrency(calc.afterHoursFee)}\n` : ''}
+TOTAL: ${this.formatCurrency(calc.customerTotal)}
 
 I'd like to book this trip or get more information about your services.
         `.trim();
@@ -414,6 +414,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('pricingCalculator')) {
         new ManyanzaPricingEngine();
     }
+    
+    // Handle logo image errors
+    const logoImages = document.querySelectorAll('.logo-img, .footer-logo-img');
+    logoImages.forEach(img => {
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+        });
+    });
 });
 
 // Export for testing purposes

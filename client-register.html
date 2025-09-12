@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Registration - Manyanza Vehicle Transit</title>
+    <title>Client Registration - TunaRide Vehicle Transit</title>
     <link rel="icon" type="image/x-icon" href="/images/manyanza-logo.svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -209,9 +209,9 @@
 <body>
     <div class="register-container">
         <div class="header">
-            <img src="/images/manyanza-logo.svg" alt="Manyanza Logo" style="width: 100px; height: auto; margin-bottom: 20px;">
+            <img src="/images/tunaride-logo.svg" alt="TunaRide Logo" style="width: 100px; height: auto; margin-bottom: 20px;">
             <h1>🚗 Client Registration</h1>
-            <p>Create your Manyanza account</p>
+            <p>Create your TunaRide account</p>
         </div>
 
         <div class="whatsapp-note">
@@ -277,7 +277,7 @@
         </form>
 
         <div class="login-link">
-            <p>Already have an account? <a href="/login?role=client">Sign in here</a></p>
+            <p>Already have an account? <a href="login.html?role=client">Sign in here</a></p>
         </div>
 
         <a href="/" class="back-btn">
@@ -325,14 +325,14 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    showAlert('Account created successfully! Welcome to Manyanza!', 'success');
+                    showAlert('Account created successfully! Welcome to TunaRide!', 'success');
                     
                     // Store token
                     localStorage.setItem('authToken', result.token);
                     
                     // Redirect after 2 seconds
                     setTimeout(() => {
-                        window.location.href = '/client-dashboard';
+                        window.location.href = 'client-dashboard.html';
                     }, 2000);
                 } else {
                     showAlert(result.error || 'Registration failed. Please try again.', 'error');

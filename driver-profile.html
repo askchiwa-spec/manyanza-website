@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Profile - TunaRide Vehicle Transit</title>
+    <link rel="icon" type="image/x-icon" href="/images/manyanza-logo.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #667eea;
+            object-fit: cover;
+        }
+
+        .user-info h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-icon.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-icon.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .card-icon.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .card-icon.info {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .document-upload {
+            border: 2px dashed #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .document-upload:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .document-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .document-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .verification-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .rating-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .rating-stars {
+            color: #ffc107;
+        }
+
+        .rating-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <img src="/images/tunaride-logo.svg" alt="TunaRide Logo" class="user-avatar" style="width: 60px; height: 60px;">
+                <div class="user-info">
+                    <h1>Driver Profile</h1>
+                    <p>Manage your personal and professional information</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="driver-dashboard.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+                <button onclick="logout()" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Profile Grid -->
+        <div class="profile-grid">
+            <!-- Personal Information -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <div class="card-icon primary">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="card-title">Personal Information</h3>
+                </div>
+                <form id="personalInfoForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" value="Driver User">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" value="driver@manyanza.co.tz">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+255 XXX XXX XXX" value="+255 765 111 131">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="licenseNumber">Driver's License Number</label>
+                            <input type="text" id="licenseNumber" name="licenseNumber" placeholder="Enter license number" value="DL-2025-12345">
+                        </div>
+                        <div class="form-group">
+                            <label for="licenseExpiry">License Expiry Date</label>
+                            <input type="date" id="licenseExpiry" name="licenseExpiry" value="2028-12-31">
+                        </div>
+                    </div>
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i>
+                        Save Personal Info
+                    </button>
+                </form>
+            </div>
+
+            <!-- Vehicle Information -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <div class="card-icon success">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="card-title">Vehicle Information</h3>
+                </div>
+                <form id="vehicleInfoForm">
+                    <div class="form-group">
+                        <label for="vehicleMake">Vehicle Make</label>
+                        <input type="text" id="vehicleMake" name="vehicleMake" placeholder="e.g., Toyota, Nissan" value="Toyota">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleModel">Vehicle Model</label>
+                        <input type="text" id="vehicleModel" name="vehicleModel" placeholder="e.g., Hilux, Navara" value="Hilux">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehicleYear">Year</label>
+                            <input type="number" id="vehicleYear" name="vehicleYear" placeholder="e.g., 2020" value="2022">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehiclePlate">License Plate</label>
+                            <input type="text" id="vehiclePlate" name="vehiclePlate" placeholder="e.g., T 123 ABC" value="T 567 XYZ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleColor">Color</label>
+                        <input type="text" id="vehicleColor" name="vehicleColor" placeholder="e.g., White, Blue" value="White">
+                    </div>
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i>
+                        Save Vehicle Info
+                    </button>
+                </form>
+            </div>
+
+            <!-- Documents -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <div class="card-icon warning">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="card-title">Required Documents</h3>
+                </div>
+                <div class="form-group">
+                    <label>Driver's License <span class="verification-status status-approved">Approved</span></label>
+                    <div class="document-upload" onclick="uploadDocument('license')">
+                        <i class="fas fa-upload fa-2x"></i>
+                        <p>Upload Driver's License (Front)</p>
+                        <p style="font-size: 0.9rem; color: #6c757d;">Click to upload or drag & drop</p>
+                    </div>
+                    <div class="document-preview">
+                        <img src="/images/placeholder-document.png" alt="License Preview" id="licensePreview">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Vehicle Registration <span class="verification-status status-pending">Pending Review</span></label>
+                    <div class="document-upload" onclick="uploadDocument('registration')">
+                        <i class="fas fa-upload fa-2x"></i>
+                        <p>Upload Vehicle Registration</p>
+                        <p style="font-size: 0.9rem; color: #6c757d;">Click to upload or drag & drop</p>
+                    </div>
+                    <div class="document-preview">
+                        <img src="/images/placeholder-document.png" alt="Registration Preview" id="registrationPreview">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <div class="card-icon info">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="card-title">Performance</h3>
+                </div>
+                <div class="form-group">
+                    <label>Overall Rating</label>
+                    <div class="rating-display">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="rating-value">4.5/5.0</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Total Trips Completed</label>
+                    <input type="text" value="156" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>On-Time Performance</label>
+                    <input type="text" value="94%" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Cancellation Rate</label>
+                    <input type="text" value="2%" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script>
+        // Set up form handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('personalInfoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showToast('Personal information saved successfully!');
+            });
+            
+            document.getElementById('vehicleInfoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showToast('Vehicle information saved successfully!');
+            });
+        });
+
+        function uploadDocument(type) {
+            // Simulate document upload for demo purposes
+            showToast(`Document upload simulated for ${type}`);
+            
+            // In a real implementation, this would open a file dialog
+            // and handle the actual file upload process
+        }
+
+        function logout() {
+            // Clear any stored authentication data
+            localStorage.removeItem('authToken');
+            showToast('Logged out successfully');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

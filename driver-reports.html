@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Reports - TunaRide Vehicle Transit</title>
+    <link rel="icon" type="image/x-icon" href="/images/manyanza-logo.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #667eea;
+            object-fit: cover;
+        }
+
+        .user-info h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .reports-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-icon.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-icon.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .card-icon.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .card-icon.info {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        }
+
+        .card-icon.danger {
+            background: linear-gradient(135deg, #dc3545 0%, #e96479 100%);
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .filter-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .report-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .summary-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 5px 0;
+        }
+
+        .summary-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .chart-container {
+            height: 250px;
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            padding: 20px 0;
+            border-bottom: 1px solid #e9ecef;
+            margin: 20px 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            min-height: 5px;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .export-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-1px);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .export-options {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <img src="/images/tunaride-logo.svg" alt="TunaRide Logo" class="user-avatar" style="width: 60px; height: 60px;">
+                <div class="user-info">
+                    <h1>Performance Reports</h1>
+                    <p>Detailed analytics and performance metrics</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="driver-dashboard.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+                <button onclick="logout()" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Reports Grid -->
+        <div class="reports-grid">
+            <!-- Report Filters -->
+            <div class="reports-card">
+                <div class="card-header">
+                    <div class="card-icon primary">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3 class="card-title">Report Filters</h3>
+                </div>
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="form-group">
+                            <label for="reportType">Report Type</label>
+                            <select id="reportType">
+                                <option value="earnings">Earnings Report</option>
+                                <option value="performance">Performance Report</option>
+                                <option value="trips">Trip History</option>
+                                <option value="routes">Popular Routes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateRange">Date Range</label>
+                            <select id="dateRange">
+                                <option value="7">Last 7 Days</option>
+                                <option value="30" selected>Last 30 Days</option>
+                                <option value="90">Last 90 Days</option>
+                                <option value="custom">Custom Range</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-row" id="customDateRange" style="display: none;">
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">End Date</label>
+                            <input type="date" id="endDate">
+                        </div>
+                    </div>
+                    <button class="generate-btn" onclick="generateReport()">
+                        <i class="fas fa-chart-line"></i> Generate Report
+                    </button>
+                </div>
+                
+                <div class="export-options">
+                    <button class="export-btn">
+                        <i class="fas fa-file-pdf"></i> Export PDF
+                    </button>
+                    <button class="export-btn">
+                        <i class="fas fa-file-excel"></i> Export Excel
+                    </button>
+                    <button class="export-btn">
+                        <i class="fas fa-print"></i> Print Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Earnings Summary -->
+            <div class="reports-card">
+                <div class="card-header">
+                    <div class="card-icon success">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3 class="card-title">Earnings Summary</h3>
+                </div>
+                <div class="report-summary">
+                    <div class="summary-card">
+                        <div class="summary-value">42</div>
+                        <div class="summary-label">Total Trips</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value">TSh 1.25M</div>
+                        <div class="summary-label">Total Earnings</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value">TSh 42.5k</div>
+                        <div class="summary-label">Avg. Per Trip</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value">94%</div>
+                        <div class="summary-label">On-Time Rate</div>
+                    </div>
+                </div>
+                
+                <h4 style="margin: 20px 0 10px; color: #2c3e50;">Weekly Earnings Trend</h4>
+                <div class="chart-container">
+                    <div class="chart-bar" style="height: 40%;"></div>
+                    <div class="chart-bar" style="height: 60%;"></div>
+                    <div class="chart-bar" style="height: 80%;"></div>
+                    <div class="chart-bar" style="height: 70%;"></div>
+                    <div class="chart-bar" style="height: 90%;"></div>
+                    <div class="chart-bar" style="height: 75%;"></div>
+                    <div class="chart-bar" style="height: 85%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="chart-label">Mon</div>
+                    <div class="chart-label">Tue</div>
+                    <div class="chart-label">Wed</div>
+                    <div class="chart-label">Thu</div>
+                    <div class="chart-label">Fri</div>
+                    <div class="chart-label">Sat</div>
+                    <div class="chart-label">Sun</div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="reports-card">
+                <div class="card-header">
+                    <div class="card-icon warning">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="card-title">Performance Metrics</h3>
+                </div>
+                <div class="report-summary">
+                    <div class="summary-card">
+                        <div class="summary-value">4.7</div>
+                        <div class="summary-label">Avg. Rating</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value">96%</div>
+                        <div class="summary-label">Completion Rate</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value">2%</div>
+                        <div class="summary-label">Cancellation Rate</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value">156</div>
+                        <div class="summary-label">Total Reviews</div>
+                    </div>
+                </div>
+                
+                <h4 style="margin: 20px 0 10px; color: #2c3e50;">Customer Feedback</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Rating</th>
+                                <th>Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sep 10</td>
+                                <td>John M.</td>
+                                <td>5.0</td>
+                                <td>Professional and punctual driver</td>
+                            </tr>
+                            <tr>
+                                <td>Sep 8</td>
+                                <td>Sarah K.</td>
+                                <td>4.5</td>
+                                <td>Great service, vehicle in excellent condition</td>
+                            </tr>
+                            <tr>
+                                <td>Sep 5</td>
+                                <td>Michael T.</td>
+                                <td>5.0</td>
+                                <td>Highly recommend! Will book again</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Trip History -->
+            <div class="reports-card">
+                <div class="card-header">
+                    <div class="card-icon info">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3 class="card-title">Recent Trips</h3>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Route</th>
+                                <th>Date</th>
+                                <th>Earnings</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>MZ-2025-001</td>
+                                <td>Dar → Mwanza</td>
+                                <td>Sep 10</td>
+                                <td>TSh 212,500</td>
+                                <td><span class="status-badge badge-completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>MZ-2025-003</td>
+                                <td>Arusha → Dodoma</td>
+                                <td>Sep 8</td>
+                                <td>TSh 187,000</td>
+                                <td><span class="status-badge badge-completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>MZ-2025-005</td>
+                                <td>Zanzibar → Dar</td>
+                                <td>Sep 5</td>
+                                <td>TSh 165,000</td>
+                                <td><span class="status-badge badge-completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>MZ-2025-007</td>
+                                <td>Mbeya → Tunduma</td>
+                                <td>Sep 3</td>
+                                <td>TSh 295,000</td>
+                                <td><span class="status-badge badge-completed">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle date range selection
+        document.getElementById('dateRange').addEventListener('change', function() {
+            const customRange = document.getElementById('customDateRange');
+            if (this.value === 'custom') {
+                customRange.style.display = 'grid';
+            } else {
+                customRange.style.display = 'none';
+            }
+        });
+
+        function generateReport() {
+            alert('Report generated successfully! In a real implementation, this would generate the selected report.');
+        }
+
+        function logout() {
+            // Clear any stored authentication data
+            localStorage.removeItem('authToken');
+            alert('Logged out successfully');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
