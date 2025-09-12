@@ -185,7 +185,7 @@ p {
 
 .nav-link:hover,
 .nav-link.active {
-    color: #2563eb;
+    color: var(--primary-color);
 }
 
 .nav-link.active::after {
@@ -195,7 +195,7 @@ p {
     left: 0;
     width: 100%;
     height: 2px;
-    background: #2563eb;
+    background: var(--primary-color);
 }
 
 .nav-toggle {
@@ -289,37 +289,37 @@ p {
 }
 
 .btn-primary {
-    background: #2563eb;
-    color: white;
-    border-color: #2563eb;
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
 }
 
 .btn-primary:hover {
-    background: #1d4ed8;
-    border-color: #1d4ed8;
+    background: #B8860B;
+    border-color: #B8860B;
     transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background: #64748b;
+    background: var(--secondary-color);
     color: white;
-    border-color: #64748b;
+    border-color: var(--secondary-color);
 }
 
 .btn-secondary:hover {
-    background: #475569;
-    border-color: #475569;
+    background: #001220;
+    border-color: #001220;
     transform: translateY(-2px);
 }
 
 .btn-outline {
     background: transparent;
-    color: #2563eb;
-    border-color: #2563eb;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .btn-outline:hover {
-    background: #2563eb;
+    background: var(--primary-color);
     color: white;
     transform: translateY(-2px);
 }
@@ -331,7 +331,7 @@ p {
 
 /* Page Hero */
 .page-hero {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #B8860B 100%);
     color: white;
     padding: 120px 0 80px;
     text-align: center;
@@ -399,7 +399,7 @@ p {
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
-    color: #2563eb;
+    color: var(--primary-color);
     font-size: 2rem;
 }
 
@@ -427,7 +427,7 @@ p {
 }
 
 .step-number {
-    background: #2563eb;
+    background: var(--primary-color);
     color: white;
     width: 60px;
     height: 60px;
@@ -446,7 +446,7 @@ p {
 }
 
 .step-arrow {
-    color: #2563eb;
+    color: var(--primary-color);
     font-size: 1.5rem;
     display: flex;
     align-items: center;
@@ -454,7 +454,7 @@ p {
 
 /* CTA Section */
 .cta-section {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #B8860B 100%);
     color: white;
     padding: 80px 0;
     text-align: center;
@@ -557,7 +557,7 @@ p {
 }
 
 .service-card.featured {
-    border: 2px solid #2563eb;
+    border: 2px solid var(--primary-color);
     position: relative;
 }
 
@@ -566,7 +566,7 @@ p {
     position: absolute;
     top: -12px;
     left: 2rem;
-    background: #2563eb;
+    background: var(--primary-color);
     color: white;
     padding: 4px 16px;
     border-radius: 20px;
@@ -583,7 +583,7 @@ p {
     align-items: center;
     justify-content: center;
     margin-bottom: 1.5rem;
-    color: #2563eb;
+    color: var(--primary-color);
     font-size: 2rem;
 }
 
@@ -610,7 +610,7 @@ p {
 }
 
 .feature i {
-    color: #2563eb;
+    color: var(--primary-color);
     font-size: 1.2rem;
     margin-top: 2px;
 }
@@ -703,7 +703,8 @@ p {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #2563eb;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
 
 .checkbox-group {
@@ -748,11 +749,12 @@ p {
     cursor: pointer;
     transition: all 0.3s ease;
     color: #64748b;
+    font-size: 0.9rem;
 }
 
 .file-upload-label:hover {
-    border-color: #2563eb;
-    color: #2563eb;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .form-note {
@@ -865,7 +867,7 @@ p {
 }
 
 .social-links a:hover {
-    background: #2563eb;
+    background: var(--primary-color);
 }
 
 .footer-bottom {
@@ -906,7 +908,7 @@ p {
     padding: 1rem;
     background: #f8faff;
     border-radius: 8px;
-    border-left: 4px solid #2563eb;
+    border-left: 4px solid var(--primary-color);
 }
 
 .highlight-label {
@@ -990,6 +992,7 @@ p {
     height: fit-content;
 }
 
+/* Results Header */
 .results-header {
     display: flex;
     align-items: center;
@@ -1003,6 +1006,7 @@ p {
     font-size: 1.5rem;
 }
 
+/* Breakdown Section */
 .breakdown-section {
     margin-bottom: 2rem;
 }
@@ -1025,10 +1029,11 @@ p {
     border-bottom: none;
 }
 
-.breakdown-item.subtotal {
-    font-weight: 600;
+.breakdown-item h4 {
     color: #1e40af;
     font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
 }
 
 .breakdown-item.commission {
@@ -1094,81 +1099,6 @@ p {
     margin-bottom: 0.5rem;
 }
 
-.action-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.action-buttons .btn {
-    flex: 1;
-    min-width: 200px;
-}
-
-/* Pricing Models Section */
-.pricing-models {
-    padding: 80px 0;
-}
-
-.models-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 3rem;
-}
-
-.model-card {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.model-card:hover {
-    transform: translateY(-5px);
-}
-
-.model-icon {
-    background: #eff6ff;
-    width: 80px;
-    height: 80px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    color: #2563eb;
-    font-size: 2rem;
-}
-
-.model-card h3 {
-    color: #1e40af;
-    margin-bottom: 1rem;
-}
-
-.model-features {
-    list-style: none;
-    padding: 0;
-    margin-top: 1.5rem;
-    text-align: left;
-}
-
-.model-features li {
-    padding: 0.5rem 0;
-    color: #64748b;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.model-features li::before {
-    content: '✓';
-    color: #22c55e;
-    font-weight: bold;
-    width: 16px;
-}
-
 /* Calculator Error Styles */
 .calculator-error {
     animation: slideDown 0.3s ease-out;
@@ -1227,7 +1157,7 @@ p {
 
 .user-btn:hover {
     background: #f8f9fa;
-    color: #2563eb;
+    color: var(--primary-color);
 }
 
 .dropdown-menu {
@@ -1265,13 +1195,14 @@ p {
     background: none;
     width: 100%;
     text-align: left;
-    cursor: pointer;
     font-size: 0.95rem;
+    cursor: pointer;
+    font-weight: 600;
 }
 
 .dropdown-item:hover {
     background: #f8f9fa;
-    color: #2563eb;
+    color: var(--primary-color);
 }
 
 .dropdown-item.logout-btn {
@@ -1281,7 +1212,7 @@ p {
 
 .dropdown-item.logout-btn:hover {
     background: #fff5f5;
-    color: #dc3545;
+    color: var(--primary-color);
 }
 
 .dropdown-divider {
@@ -1291,7 +1222,7 @@ p {
 }
 
 .nav-link.login-btn {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #B8860B 100%);
     color: white;
     padding: 8px 16px;
     border-radius: 6px;
@@ -1301,7 +1232,7 @@ p {
 
 .nav-link.login-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
     color: white;
 }
 
@@ -1312,13 +1243,13 @@ p {
     font-size: 1rem;
     border: 2px solid #e5e7eb;
     border-radius: 8px;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 .pricing-form .form-group select:focus,
 .pricing-form .form-group input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
 
 .pricing-form .form-group label {
@@ -1338,19 +1269,19 @@ p {
         background-color: white;
         width: 100%;
         text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0,0,0,0.05);
         padding: 2rem 0;
+        box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+        padding: 2rem 0 2rem;
     }
-
+    
     .nav-menu.active {
         left: 0;
     }
-
+    
     .nav-toggle {
         display: flex;
     }
-
+    
     /* Mobile logo adjustments */
     .nav-logo .logo-img {
         height: 32px;
@@ -1367,31 +1298,31 @@ p {
     .footer-logo h3 {
         font-size: 1.2rem;
     }
-
+    
     .hero-container {
         grid-template-columns: 1fr;
         gap: 2rem;
         text-align: center;
     }
-
+    
     .hero-title {
         font-size: 2rem;
     }
-
+    
     .form-row {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-
+    
     .contact-form-container {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-
+    
     .services-grid {
         grid-template-columns: 1fr;
     }
-
+    
     .about-grid,
     .choose-content,
     .requirements-content,
@@ -1401,58 +1332,58 @@ p {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-
+    
     .steps-container,
     .process-steps {
         flex-direction: column;
     }
-
+    
     .step-arrow,
     .process-arrow {
         transform: rotate(90deg);
     }
-
+    
     .checkbox-group {
         grid-template-columns: 1fr;
     }
-
+    
     .hero-buttons,
     .cta-buttons {
         flex-direction: column;
         align-items: center;
     }
-
+    
     .btn {
         width: 100%;
         max-width: 300px;
     }
-
+    
     .calculator-container {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-
+    
     .pricing-form .form-row {
         grid-template-columns: 1fr;
     }
-
+    
     .action-buttons {
         flex-direction: column;
     }
-
+    
     .action-buttons .btn {
         min-width: auto;
     }
-
+    
     .models-grid {
         grid-template-columns: 1fr;
     }
-
+    
     .total-amount,
     .driver-payout {
         font-size: 1.1rem;
     }
-
+    
     .breakdown-item {
         font-size: 0.95rem;
     }
